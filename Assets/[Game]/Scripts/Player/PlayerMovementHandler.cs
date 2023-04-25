@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,17 +25,14 @@ public class PlayerMovementHandler : MonoBehaviour
     public PlayerAbilityTracker abilities;
 
     [Header("Player_Dash")]
-    [SerializeField] float dashSpeed;
-    [SerializeField] float dashTime;
-    private float dashCounter;
-    private float dashRechargeCounter;
-    public SpriteRenderer spriteRenderer;
-    public SpriteRenderer afterImage;
-    [SerializeField] float afterImageLifeTime;
-    [SerializeField] float timeBetweenAfterImage;
-    private float afterImageCounter;
-    [SerializeField] Color afterImageColor;
-    [SerializeField] float waitAfterDashing;
+    private bool isDashing;
+    public float dashTime;
+    public float dashSpeed;
+    public float distanceBetweenImages;
+    public float dashCooldown;
+    private float dashTimeLeft;
+    private float lastImageXPos;
+    private float lastDash = -100f;
     
 
     void Start()
@@ -48,32 +46,15 @@ public class PlayerMovementHandler : MonoBehaviour
     {
         if (canMove)
         {
-
-            if (dashRechargeCounter > 0)
+            
+            if (Input.GetButtonDown("Fire2"))
             {
-                dashRechargeCounter -= Time.deltaTime;
-            }
-            else
-            {
-                if (Input.GetButtonDown("Fire2"))
+                if (Time.deltaTime >= lastDash + dashCooldown)
                 {
-                    dashCounter = dashTime;
-                    ShowAfterImage();
+                    AttempToDash();
                 }
             }
-
-            if (dashCounter > 0)
-            {
-                dashCounter -= Time.deltaTime;
-                rb.velocity = new Vector2(dashSpeed * transform.localScale.x, rb.velocity.y);
-
-                afterImageCounter -= Time.deltaTime;
-                if (afterImageCounter < 0)
-                {
-                    ShowAfterImage();
-                }
-                dashRechargeCounter = waitAfterDashing;
-            }else
+            
             {
                 rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * movementSpeed, rb.velocity.y);
 
@@ -114,18 +95,43 @@ public class PlayerMovementHandler : MonoBehaviour
 
             animator.SetBool("jump", jumping);       
         }
-         
+        CheckDash();
     }
 
-    public void ShowAfterImage()
+    private void AttempToDash()
     {
-        SpriteRenderer image = Instantiate(afterImage, transform.position , Quaternion.identity);
-        image.sprite = spriteRenderer.sprite;
-        image.transform.localScale = transform.localScale;
-        image.color = afterImageColor;
+        isDashing = true;
+        dashTimeLeft = dashTime;
+        lastDash = Time.time;
 
-        Destroy(image.gameObject, afterImageLifeTime);
+        PlayerAfterImagePool.Instance.GetFromPool();
+        lastImageXPos = transform.position.x;
+    }
 
-        afterImageCounter = timeBetweenAfterImage;
+    private void CheckDash()
+    {
+        if (isDashing)
+        {
+            if (dashTimeLeft > 0)
+            {
+                canMove= false;
+                rb.velocity = new Vector2(dashSpeed * transform.localScale.x , rb.velocity.y);
+                dashTimeLeft -= Time.deltaTime;
+
+                if (Mathf.Abs(transform.position.x - lastImageXPos) > distanceBetweenImages)
+                {
+                    PlayerAfterImagePool.Instance.GetFromPool();
+                    lastImageXPos = transform.position.x;
+                }
+            }
+            if (dashTimeLeft <= 0)
+            {
+                canMove = true;
+                isDashing = false;
+            }
+        }
+
+
+        
     }
 }

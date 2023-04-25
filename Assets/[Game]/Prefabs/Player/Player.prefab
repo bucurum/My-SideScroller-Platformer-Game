@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: -3145328045451892686, guid: 680169d0ad6a78048bc4dd5beb36ef46, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -159,9 +159,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9102081247815066054}
-  - component: {fileID: 1666534976665344224}
   - component: {fileID: 7276246198046219629}
+  - component: {fileID: 1666534976665344224}
   - component: {fileID: 1223731010570397325}
+  - component: {fileID: 8199768443281952083}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -185,36 +186,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1666534976665344224
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9102081247815066055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 847e2f9f16930da46a52690cbda8c48f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 7276246198046219629}
-  movementSpeed: 7
-  animator: {fileID: 696470545}
-  canMove: 0
-  jumpForce: 15
-  groundPoint: {fileID: 2541421083472346950}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  abilities: {fileID: 0}
-  dashSpeed: 25
-  dashTime: 0.2
-  spriteRenderer: {fileID: 6657490388580128775}
-  afterImage: {fileID: 5436429274276219940, guid: 8c1944167205ba44eb29270417bad1b7, type: 3}
-  afterImageLifeTime: 1
-  timeBetweenAfterImage: 1
-  afterImageColor: {r: 0.6666667, g: 0.5686275, b: 0.43137258, a: 0}
-  waitAfterDashing: 3
 --- !u!50 &7276246198046219629
 Rigidbody2D:
   serializedVersion: 4
@@ -236,6 +207,36 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &1666534976665344224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9102081247815066055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 847e2f9f16930da46a52690cbda8c48f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 7276246198046219629}
+  movementSpeed: 7
+  animator: {fileID: 696470545}
+  canMove: 0
+  jumpForce: 15
+  groundPoint: {fileID: 2541421083472346950}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  abilities: {fileID: 1223731010570397325}
+  dashSpeed: 25
+  dashTime: 0.2
+  spriteRenderer: {fileID: 6657490388580128775}
+  afterImage: {fileID: 3816241329605040658, guid: 7332b3a6aec0db64c852a4e29b841861, type: 3}
+  afterImageLifeTime: 10
+  timeBetweenAfterImage: 10
+  afterImageColor: {r: 0.7924528, g: 0.16073336, b: 0.16073336, a: 0}
+  waitAfterDashing: 3
 --- !u!114 &1223731010570397325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,3 +252,20 @@ MonoBehaviour:
   canDoubleJump: 0
   canDash: 0
   canDropBomb: 0
+--- !u!114 &8199768443281952083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9102081247815066055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9692a4fb371b3e4faf6eca83df1cc7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+  invincibilityLength: 0
+  flashLength: 0
+  playerSprites: []
