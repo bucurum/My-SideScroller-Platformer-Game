@@ -8,8 +8,10 @@ public class PlayerMovementHandler : MonoBehaviour
     [Header("Player")]
     public Rigidbody2D rb;
     [SerializeField] float movementSpeed = 1f;
+    [SerializeField] float crouchSpeed = 1f;
     [SerializeField] Animator animator;
     [SerializeField] bool canMove;
+
 
     
     [Header("Jump")]
@@ -56,7 +58,7 @@ public class PlayerMovementHandler : MonoBehaviour
             }
             else
             {
-                if (Input.GetButtonDown("Fire2"))
+                if (Input.GetKeyDown(KeyCode.LeftShift))
                 {
                     dashCounter = dashTime;
                     ShowAfterImage();
@@ -108,10 +110,24 @@ public class PlayerMovementHandler : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.y, jumpForce);
 
             }
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetMouseButtonDown(0))
             {
                 animator.SetTrigger("attack");
             }
+
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * crouchSpeed, rb.velocity.y);
+                animator.SetBool("crouch", true);
+                animator.SetFloat("speed", Mathf.Abs(rb.velocity.x));
+            }
+            if (Input.GetKeyUp(KeyCode.LeftControl))
+            {
+                rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * movementSpeed, rb.velocity.y);
+                animator.SetBool("crouch", false);
+                animator.SetFloat("speed", Mathf.Abs(rb.velocity.x));
+            }
+
         }
         else
         {

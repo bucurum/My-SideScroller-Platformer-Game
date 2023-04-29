@@ -203,7 +203,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 2607124595604728282}
   movementSpeed: 7
-  animator: {fileID: 0}
+  crouchSpeed: 1
+  animator: {fileID: 4505046549337128493}
   canMove: 0
   jumpForce: 25
   groundPoint: {fileID: 7174450117291690993}
