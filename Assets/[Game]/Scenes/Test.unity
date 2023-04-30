@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!4 &429559157 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8348813129390601931, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
-  m_PrefabInstance: {fileID: 4505046548332525664}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &747370976
 GameObject:
   m_ObjectHideFlags: 0
@@ -14270,10 +14265,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 679188539767151560, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4505046548268324208, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
       propertyPath: m_Name
       value: Player
@@ -14321,34 +14312,6 @@ PrefabInstance:
     - target: {fileID: 4505046548268324209, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5778018828383244858, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
-      propertyPath: canDash
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5778018828383244858, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
-      propertyPath: canDropBomb
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5778018828383244858, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
-      propertyPath: canDoubleJump
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6337846600152788055, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
-      propertyPath: wallCheck
-      value: 
-      objectReference: {fileID: 429559157}
-    - target: {fileID: 6337846600152788055, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
-      propertyPath: wallLayer.m_Bits
-      value: 128
-      objectReference: {fileID: 0}
-    - target: {fileID: 6337846600152788055, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
-      propertyPath: wallSlidingSpeed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8348813129390601931, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.46
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}

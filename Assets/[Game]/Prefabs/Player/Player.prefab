@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 679188539767151560}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.25, y: 0.243, z: 0}
+  m_LocalPosition: {x: 0.46, y: 0.243, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4505046548268324209}
@@ -236,7 +236,12 @@ MonoBehaviour:
   movementSpeed: 7
   crouchSpeed: 3
   animator: {fileID: 4505046549337128493}
-  canMove: 0
+  wallSlidingSpeed: 3
+  wallCheck: {fileID: 8348813129390601931}
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  wallJumpingPower: {x: 25, y: 25}
   jumpForce: 25
   groundPoint: {fileID: 7174450117291690993}
   groundLayer:
@@ -263,7 +268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47d205ca2e1417d4c8165519005e58c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canDoubleJump: 0
+  canDoubleJump: 1
   canDash: 0
   canDropBomb: 0
 --- !u!114 &3539645312671398372
