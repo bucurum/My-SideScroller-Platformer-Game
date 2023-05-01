@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 8458466406407033936}
   m_Layer: 0
   m_Name: StandingSprite
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -236,6 +236,7 @@ MonoBehaviour:
   movementSpeed: 7
   crouchSpeed: 3
   animator: {fileID: 4505046549337128493}
+  canMove: 0
   wallSlidingSpeed: 3
   wallCheck: {fileID: 8348813129390601931}
   wallLayer:

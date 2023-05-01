@@ -9,8 +9,8 @@ public class PlayerMovementHandler : MonoBehaviour
     public Rigidbody2D rb;
     [SerializeField] float movementSpeed = 1f;
     [SerializeField] float crouchSpeed = 1f;
-    [SerializeField] Animator animator;
-    private bool canMove;
+    public Animator animator;
+    public bool canMove;
     private bool isFacingRight;
 
     [Header("WallSlide")]
@@ -192,7 +192,6 @@ public class PlayerMovementHandler : MonoBehaviour
         else
         {
             isWallSliding = false;
-            Debug.Log("wallsliding false");
         }
         animator.SetBool("wallSlide",isWallSliding);
     }
