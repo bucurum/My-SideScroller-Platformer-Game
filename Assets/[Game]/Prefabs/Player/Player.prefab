@@ -173,6 +173,7 @@ GameObject:
   - component: {fileID: 6337846600152788055}
   - component: {fileID: 5778018828383244858}
   - component: {fileID: 3539645312671398372}
+  - component: {fileID: 8017726832817331072}
   - component: {fileID: 4505046549337128492}
   - component: {fileID: 4505046549337128493}
   m_Layer: 0
@@ -196,6 +197,7 @@ Transform:
   - {fileID: 8263436747101356390}
   - {fileID: 7174450117291690993}
   - {fileID: 8348813129390601931}
+  - {fileID: 5757346208694317120}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -289,6 +291,24 @@ MonoBehaviour:
   invincibilityLength: 0
   flashLength: 0
   playerSprites: []
+--- !u!114 &8017726832817331072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4505046548268324208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dc3485b8ce29e42993a47834ff4e1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackPoint: {fileID: 5757346208694317120}
+  attackRange: 0.85
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  damageAmount: 10
 --- !u!212 &4505046549337128492
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -360,3 +380,33 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &9040205614952834853
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5757346208694317120}
+  m_Layer: 0
+  m_Name: AttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5757346208694317120
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9040205614952834853}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.706, y: 0.073, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4505046548268324209}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
