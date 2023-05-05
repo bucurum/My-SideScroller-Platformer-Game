@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &657479162
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 657479163}
+  m_Layer: 8
+  m_Name: PatrolPoint (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &657479163
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 657479162}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.62, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7154037666761089331}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7154037666761089324
 GameObject:
   m_ObjectHideFlags: 0
@@ -28,6 +58,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7154037667163408579}
+  - {fileID: 657479163}
   m_Father: {fileID: 7154037667195387201}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -43,8 +74,8 @@ GameObject:
   - component: {fileID: 7154037667026149944}
   - component: {fileID: 7154037667026149951}
   m_Layer: 8
-  m_Name: EnemySprite
-  m_TagString: Enemies
+  m_Name: EnemyWalkerSprite
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -158,7 +189,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7154037667163408572}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.41, y: 0, z: 0}
+  m_LocalPosition: {x: 10.39, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7154037666761089331}
@@ -177,9 +208,10 @@ GameObject:
   - component: {fileID: 7154037667195387203}
   - component: {fileID: 7154037667195387200}
   - component: {fileID: 7154037667195387207}
+  - component: {fileID: 2004820091}
   m_Layer: 8
   m_Name: EnemyWalker
-  m_TagString: Enemies
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -251,8 +283,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patrolPoints:
   - {fileID: 7154037667163408579}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 657479163}
   - {fileID: 7154037667163408579}
   moveSpeed: 5
   jumpForce: 12
@@ -273,3 +304,16 @@ MonoBehaviour:
   totalHealth: 100
   deathEffect: {fileID: 8394173478655879780, guid: 50657023ef947b3459f2ed63a6e9ef56, type: 3}
   animator: {fileID: 7154037667026149951}
+--- !u!114 &2004820091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7154037667195387196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b418a11ea4f48445aa214d93687f5f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 5

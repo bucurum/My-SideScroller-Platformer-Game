@@ -8,15 +8,16 @@ public class PlayerHealthController : MonoBehaviour
 
     [Header("Health")]
     public int maxHealth;
-    [HideInInspector]
+    [SerializeField]
     public int currentHealth;
 
     [Header("Invincibility")]
-    [SerializeField] float invincibilityLength;
+    [SerializeField] float invincibilityLenght;
     private float invincibilityCounter;
-    [SerializeField] float flashLength;
+    [SerializeField] float flashLenght;
     private float flashCounter;
-    [SerializeField] SpriteRenderer[] playerSprites;
+
+    public SpriteRenderer spriteRenderer;
 
     void Awake()
     {
@@ -38,30 +39,45 @@ public class PlayerHealthController : MonoBehaviour
 
     void Update()
     {
-        // if (invincibilityCounter > 0)
-        // {
-        //     invincibilityCounter -= Time.deltaTime;
+        if (invincibilityCounter > 0)
+        {
+            invincibilityCounter -= Time.deltaTime;
+        
+            flashCounter -=Time.deltaTime;
 
-        //     flashCounter -= Time.deltaTime;
-        //     if (flashCounter <= 0)
-        //     {
-        //         foreach (SpriteRenderer sprites in playerSprites)
-        //         {
-        //             sprites.enabled = true;
-        //         }
-        //         flashCounter = 0;
-        //     }
-        // }    
+            if (flashCounter <0)
+            {
+                spriteRenderer.enabled = !spriteRenderer.enabled;
+                flashCounter = flashLenght;
+            }
+
+            if (invincibilityCounter <= 0)
+            { 
+                spriteRenderer.enabled = true;
+                flashCounter = 0;  
+            }
+        }
     }
 
-    public void DamagePlayer(int damageAmount)
+    public void DamagePlayer(int damageAmout)
     {
-        currentHealth -= damageAmount;
-
-        if (currentHealth <= 0)
+        if (invincibilityCounter <= 0)
         {
-            currentHealth = 0;
+            currentHealth -= damageAmout;
+
+            if (currentHealth <= 0)
+            {
+                currentHealth = 0;
+
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                invincibilityCounter = invincibilityLenght;
+            }
+            
         }
+        
     }
 
 }

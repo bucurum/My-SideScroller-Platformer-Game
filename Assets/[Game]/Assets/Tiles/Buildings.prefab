@@ -5260,7 +5260,7 @@ GameObject:
   - component: {fileID: 5996087492802645075}
   - component: {fileID: 7568815916307449309}
   m_Layer: 0
-  m_Name: Bildings
+  m_Name: Buildings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
