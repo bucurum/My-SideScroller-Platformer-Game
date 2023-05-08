@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - EnemyFlyer
+  - Spawner
   layers:
   - Default
   - TransparentFX

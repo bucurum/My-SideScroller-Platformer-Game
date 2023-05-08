@@ -16,7 +16,6 @@ public class DamagePlayer : MonoBehaviour
     }
     private void Damage()
     {
-        Debug.Log("Sea");
         PlayerHealthController.instance.DamagePlayer(damageAmount);
     }
 }

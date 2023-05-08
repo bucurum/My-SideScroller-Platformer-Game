@@ -16,7 +16,11 @@ public class EnemyHealthController : MonoBehaviour
     public void DamageEnemy(int damageAmount)
     {
         currrentHealth -= damageAmount;
-        animator.SetTrigger("takeDamage");
+        if (animator != null)
+        {
+            animator.SetTrigger("takeDamage");
+        }
+        
 
         if (currrentHealth <= 0)
         {
@@ -24,7 +28,15 @@ public class EnemyHealthController : MonoBehaviour
             {
                 Instantiate(deathEffect, transform.position, Quaternion.identity);
             }
-            Destroy(gameObject);
+            if (gameObject.CompareTag("Spawner"))
+            {
+                Destroy(transform.parent.gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+            
         }
     }
 }
