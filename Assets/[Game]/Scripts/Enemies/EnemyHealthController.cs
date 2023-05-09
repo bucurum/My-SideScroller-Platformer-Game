@@ -5,13 +5,15 @@ using UnityEngine;
 public class EnemyHealthController : MonoBehaviour
 {
     public static EnemyHealthController instance;
-    [SerializeField] int totalHealth;
+    [SerializeField] public int totalHealth;
     private int currrentHealth;
     public GameObject deathEffect;
     public Animator animator;
+    EnemyHealthBar enemyHealthBar;
     void Start()
     {
         currrentHealth = totalHealth;
+        enemyHealthBar = GetComponentInChildren<EnemyHealthBar>();
     }
     public void DamageEnemy(int damageAmount)
     {
@@ -20,7 +22,6 @@ public class EnemyHealthController : MonoBehaviour
         {
             animator.SetTrigger("takeDamage");
         }
-        
 
         if (currrentHealth <= 0)
         {
@@ -35,8 +36,8 @@ public class EnemyHealthController : MonoBehaviour
             else
             {
                 Destroy(gameObject);
-            }
-            
+            }   
         }
+        enemyHealthBar.ChangeHealth(-damageAmount);
     }
 }

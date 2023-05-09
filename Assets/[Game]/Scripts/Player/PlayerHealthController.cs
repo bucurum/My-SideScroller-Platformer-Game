@@ -35,6 +35,8 @@ public class PlayerHealthController : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
+
+        UIController.instance.UpdateHealth(currentHealth, maxHealth);
     }
 
     void Update()
@@ -75,7 +77,8 @@ public class PlayerHealthController : MonoBehaviour
             {
                 invincibilityCounter = invincibilityLenght;
             }
-            
+            UIController.instance.UpdateHealth(currentHealth, maxHealth);
+
         }
         
     }
