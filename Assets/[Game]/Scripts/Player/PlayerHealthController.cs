@@ -18,6 +18,7 @@ public class PlayerHealthController : MonoBehaviour
     private float flashCounter;
 
     public SpriteRenderer spriteRenderer;
+    
 
     void Awake()
     {

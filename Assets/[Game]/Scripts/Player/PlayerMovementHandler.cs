@@ -55,6 +55,14 @@ public class PlayerMovementHandler : MonoBehaviour
     private float afterImageCounter;
     [SerializeField] Color afterImageColor;
     [SerializeField] float waitAfterDashing;
+
+    [Header("SwingMechanic")]
+    [SerializeField] private DistanceJoint2D distanceJoint2D;
+    [SerializeField] private LayerMask anchorLayer;
+    private float jointRange = 7f;
+    Vector2 prevVelocity;
+    [SerializeField] LineRenderer lineRenderer;
+    [SerializeField] Transform anchorTransform;
     
 
     private float horizontal;
@@ -65,6 +73,8 @@ public class PlayerMovementHandler : MonoBehaviour
         abilities = GetComponent<PlayerAbilityTracker>();
         animator = GetComponent<Animator>();
         canMove = true;
+        distanceJoint2D.enabled = false;
+        
     }
     void Update()
     {
@@ -84,10 +94,32 @@ public class PlayerMovementHandler : MonoBehaviour
             Crouch();
             WallSlide();
             WallJumping();
+            Swinging();
         }
         else
         {
             rb.velocity = Vector2.zero;
+        }
+    }
+
+    private void Swinging()
+    {
+        bool isAnchor = Physics2D.OverlapCircle(transform.position, jointRange, anchorLayer);
+        if (Input.GetMouseButton(1) && isAnchor)
+        {
+            prevVelocity = rb.velocity;
+            rb.velocity = prevVelocity * new Vector2(2f, 1f);
+            lineRenderer.positionCount = 2;
+            lineRenderer.SetPosition(0, anchorTransform.position);
+            lineRenderer.SetPosition(1, transform.position);
+            lineRenderer.enabled = true;
+            distanceJoint2D.enabled = true;
+        }
+        if (Input.GetMouseButtonUp(1))
+        {
+            distanceJoint2D.enabled = false;
+            lineRenderer.enabled = false;  
+
         }
     }
 
