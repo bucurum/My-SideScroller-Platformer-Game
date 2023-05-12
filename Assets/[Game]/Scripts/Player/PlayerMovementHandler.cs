@@ -12,6 +12,9 @@ public class PlayerMovementHandler : MonoBehaviour
     public Animator animator;
     public bool canMove;
     private bool isFacingRight;
+    private float fallAttackSpeed = 50;
+    //public bool isfallAttacking;
+    //TODO: if character trying to fall attack change attackPoint position from PlayerAttack.cs Script
 
     [Header("WallSlide")]
     private bool isWalled;
@@ -144,6 +147,13 @@ public class PlayerMovementHandler : MonoBehaviour
         {
             animator.SetTrigger("attack");
         }
+        if (Input.GetMouseButtonDown(0) && Input.GetKey(KeyCode.S) && !isGrounded)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, Input.GetAxisRaw("Vertical") * fallAttackSpeed);
+            //isfallAttacking = true;
+            animator.SetTrigger("fallAttack");
+        }
+        //isfallAttacking = false;
         if (Input.GetMouseButton(1) && !isConnectedAnchor)
         {
             rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * crouchSpeed, rb.velocity.y);

@@ -34,7 +34,10 @@ public class PlayerAttack : MonoBehaviour
                 enemy.GetComponent<EnemyHealthController>().DamageEnemy(damageAmount * 2);
             }
         }
-
+        // if (PlayerHealthController.instance.GetComponent<PlayerMovementHandler>().isfallAttacking)
+        // {
+        //     attackPoint.position = new Vector3(0, -1, 0);
+        // } 
     }
     
     void OnDrawGizmosSelected()
