@@ -63,6 +63,7 @@ public class PlayerMovementHandler : MonoBehaviour
     Vector2 prevVelocity;
     [SerializeField] LineRenderer lineRenderer;
     [SerializeField] Transform anchorTransform;
+    private bool isConnectedAnchor;
     
 
     private float horizontal;
@@ -104,8 +105,8 @@ public class PlayerMovementHandler : MonoBehaviour
 
     private void Swinging()
     {
-        bool isAnchor = Physics2D.OverlapCircle(transform.position, jointRange, anchorLayer);
-        if (Input.GetMouseButton(1) && isAnchor)
+        isConnectedAnchor = Physics2D.OverlapCircle(transform.position, jointRange, anchorLayer);
+        if (Input.GetMouseButton(1) && isConnectedAnchor)
         {
             prevVelocity = rb.velocity;
             rb.velocity = prevVelocity * new Vector2(2f, 1f);
@@ -142,6 +143,15 @@ public class PlayerMovementHandler : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             animator.SetTrigger("attack");
+        }
+        if (Input.GetMouseButton(1) && !isConnectedAnchor)
+        {
+            rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * crouchSpeed, rb.velocity.y);
+            animator.SetTrigger("heavyAttack");
+        }
+        if (Input.GetMouseButtonUp(1) && !isConnectedAnchor)
+        {
+            animator.SetBool("heavyRelease", true);
         }
     }
 

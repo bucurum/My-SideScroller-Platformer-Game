@@ -22,10 +22,19 @@ public class PlayerAttack : MonoBehaviour
     
             foreach (Collider2D enemy in enemyHit)
             {
-                Debug.Log(enemy.name);
                 enemy.GetComponent<EnemyHealthController>().DamageEnemy(damageAmount);
             }
         }
+        if (Input.GetMouseButtonUp(1))
+        {
+            Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+    
+            foreach (Collider2D enemy in enemyHit)
+            {
+                enemy.GetComponent<EnemyHealthController>().DamageEnemy(damageAmount * 2);
+            }
+        }
+
     }
     
     void OnDrawGizmosSelected()
