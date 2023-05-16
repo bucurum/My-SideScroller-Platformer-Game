@@ -31,7 +31,6 @@ public class PlayerAttack : MonoBehaviour
                 enemy.GetComponent<EnemyHealthController>().DamageEnemy(damageAmount);
                 if (enemy.CompareTag("EnemyWalker"))
                 {
-                    Debug.Log("general kenobi");
                     player.rb.velocity = new Vector2(player.rb.velocity.x, 20);
                 }
             }
