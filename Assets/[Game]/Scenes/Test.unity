@@ -15276,6 +15276,10 @@ PrefabInstance:
       propertyPath: anchorLayer.m_Bits
       value: 512
       objectReference: {fileID: 0}
+    - target: {fileID: 9040205614952834853, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
+      propertyPath: m_TagString
+      value: attackPoint
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3670013759983478764, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
@@ -15499,6 +15503,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7154037667195387196, guid: 43fe250fd69fea84b97815ada5728107, type: 3}
       propertyPath: m_Name
+      value: EnemyWalker
+      objectReference: {fileID: 0}
+    - target: {fileID: 7154037667195387196, guid: 43fe250fd69fea84b97815ada5728107, type: 3}
+      propertyPath: m_TagString
       value: EnemyWalker
       objectReference: {fileID: 0}
     - target: {fileID: 7154037667195387201, guid: 43fe250fd69fea84b97815ada5728107, type: 3}

@@ -13,8 +13,7 @@ public class PlayerMovementHandler : MonoBehaviour
     public bool canMove;
     private bool isFacingRight;
     private float fallAttackSpeed = 50;
-    //public bool isfallAttacking;
-    //TODO: if character trying to fall attack change attackPoint position from PlayerAttack.cs Script
+    [HideInInspector] public bool isfallAttacking;
 
     [Header("WallSlide")]
     private bool isWalled;
@@ -34,7 +33,7 @@ public class PlayerMovementHandler : MonoBehaviour
 
     
     [Header("Jump")]
-    [SerializeField] float jumpForce = 1f;
+    public float jumpForce = 1f;
     public Transform groundPoint;
     private bool isGrounded;
     public LayerMask groundLayer;
@@ -149,11 +148,15 @@ public class PlayerMovementHandler : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0) && Input.GetKey(KeyCode.S) && !isGrounded)
         {
-            rb.velocity = new Vector2(rb.velocity.x, Input.GetAxisRaw("Vertical") * fallAttackSpeed);
-            //isfallAttacking = true;
+            //rb.velocity = new Vector2(rb.velocity.x, Input.GetAxisRaw("Vertical") * fallAttackSpeed);
+            isfallAttacking = true;
             animator.SetTrigger("fallAttack");
         }
-        //isfallAttacking = false;
+        else
+        {
+            isfallAttacking = false;
+        }
+        
         if (Input.GetMouseButton(1) && !isConnectedAnchor)
         {
             rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * crouchSpeed, rb.velocity.y);
