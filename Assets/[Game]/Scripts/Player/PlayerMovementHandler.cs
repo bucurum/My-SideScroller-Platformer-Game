@@ -73,6 +73,7 @@ public class PlayerMovementHandler : MonoBehaviour
     public float box1OffsetX, box1OffsetY, box1SizeX, box1SizeY, box2OffsetX, box2OffsetY, box2SizeX, box2SizeY;
     private bool isGrabbing;
     private float startingGravity;
+    public LayerMask ledgeLayer;
 
     private float horizontal;
 
@@ -115,33 +116,54 @@ public class PlayerMovementHandler : MonoBehaviour
 
     private void ClimbLedge()
     {
-        rayBox1 = Physics2D.OverlapBox(new Vector2(transform.position.x + (box1OffsetX * transform.localScale.x), transform.position.y + box1OffsetY), new Vector2(box1SizeX, box1SizeY), 0f ,groundLayer);
-        rayBox2 = Physics2D.OverlapBox(new Vector2(transform.position.x + (box2OffsetX * transform.localScale.x), transform.position.y + box2OffsetY), new Vector2(box2SizeX, box2SizeY), 0f ,groundLayer);
-    
+        rayBox1 = Physics2D.OverlapBox(new Vector2(transform.position.x + (box1OffsetX * transform.localScale.x), transform.position.y + box1OffsetY), new Vector2(box1SizeX, box1SizeY), 0f ,ledgeLayer);
+        rayBox2 = Physics2D.OverlapBox(new Vector2(transform.position.x + (box2OffsetX * transform.localScale.x), transform.position.y + box2OffsetY), new Vector2(box2SizeX, box2SizeY), 0f ,ledgeLayer);
+        
         if (rayBox2 && !rayBox1 && !isGrabbing)
         {
             isGrabbing = true;
-            animator.SetBool("isGrabbing", true);
+            animator.SetTrigger("isGrabbing");
         }
-
+        Debug.Log(isGrabbing);
+        
         if (isGrabbing)
         {
             rb.velocity = Vector2.zero;
             rb.gravityScale = 0f;
-            animator.SetTrigger("isClimbing");
-            ChangePos();
+            
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                animator.SetTrigger("isClimbing");
+   
+                StartCoroutine(Climbing(new Vector2(transform.position.x + (1.2f * transform.localScale.x), transform.position.y + 2f), (this.animator.GetCurrentAnimatorStateInfo(0).normalizedTime - .3f)));    
+              
+                
+            }    
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                rb.gravityScale = startingGravity;
+                isGrabbing = false;
+            }
+            
         }
 
     }
-
-    public void ChangePos()
+    private IEnumerator Climbing(Vector2 position, float duration)
     {
-        transform.position = new Vector2(transform.position.x + (1f * transform.localScale.x), transform.position.y + 1f);
+        float time = 0;
+        Vector2 startValue = transform.position;
+        while (time < duration)
+        {
+            
+            transform.position = Vector2.Lerp(transform.position, position, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
         rb.gravityScale = startingGravity;
+                
         isGrabbing = false;
         
     }
-
     private void Swinging()
     {
         isConnectedAnchor = Physics2D.OverlapCircle(transform.position, jointRange, anchorLayer);
