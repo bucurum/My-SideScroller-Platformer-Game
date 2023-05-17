@@ -67,6 +67,12 @@ public class PlayerMovementHandler : MonoBehaviour
     [SerializeField] Transform anchorTransform;
     private bool isConnectedAnchor;
     
+    [Header("LedgeClimb")]
+    private bool rayBox1;
+    private bool rayBox2;
+    public float box1OffsetX, box1OffsetY, box1SizeX, box1SizeY, box2OffsetX, box2OffsetY, box2SizeX, box2SizeY;
+    private bool isGrabbing;
+    private float startingGravity;
 
     private float horizontal;
 
@@ -77,6 +83,7 @@ public class PlayerMovementHandler : MonoBehaviour
         animator = GetComponent<Animator>();
         canMove = true;
         distanceJoint2D.enabled = false;
+        startingGravity = rb.gravityScale;
         
     }
     void Update()
@@ -98,11 +105,41 @@ public class PlayerMovementHandler : MonoBehaviour
             WallSlide();
             WallJumping();
             Swinging();
+            ClimbLedge();
         }
         else
         {
             rb.velocity = Vector2.zero;
         }
+    }
+
+    private void ClimbLedge()
+    {
+        rayBox1 = Physics2D.OverlapBox(new Vector2(transform.position.x + (box1OffsetX * transform.localScale.x), transform.position.y + box1OffsetY), new Vector2(box1SizeX, box1SizeY), 0f ,groundLayer);
+        rayBox2 = Physics2D.OverlapBox(new Vector2(transform.position.x + (box2OffsetX * transform.localScale.x), transform.position.y + box2OffsetY), new Vector2(box2SizeX, box2SizeY), 0f ,groundLayer);
+    
+        if (rayBox2 && !rayBox1 && !isGrabbing)
+        {
+            isGrabbing = true;
+            animator.SetBool("isGrabbing", true);
+        }
+
+        if (isGrabbing)
+        {
+            rb.velocity = Vector2.zero;
+            rb.gravityScale = 0f;
+            animator.SetTrigger("isClimbing");
+            ChangePos();
+        }
+
+    }
+
+    public void ChangePos()
+    {
+        transform.position = new Vector2(transform.position.x + (1f * transform.localScale.x), transform.position.y + 1f);
+        rb.gravityScale = startingGravity;
+        isGrabbing = false;
+        
     }
 
     private void Swinging()
@@ -148,7 +185,6 @@ public class PlayerMovementHandler : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0) && Input.GetKey(KeyCode.S) && !isGrounded)
         {
-            //rb.velocity = new Vector2(rb.velocity.x, Input.GetAxisRaw("Vertical") * fallAttackSpeed);
             isfallAttacking = true;
             animator.SetTrigger("fallAttack");
         }
@@ -299,5 +335,13 @@ public class PlayerMovementHandler : MonoBehaviour
         Destroy(image.gameObject, afterImageLifeTime);
 
         afterImageCounter = timeBetweenAfterImage;
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(new Vector2(transform.position.x + (box1OffsetX * transform.localScale.x), transform.position.y + box1OffsetY), new Vector2(box1SizeX, box1SizeY));
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(new Vector2(transform.position.x + (box2OffsetX * transform.localScale.x), transform.position.y + box2OffsetY), new Vector2(box2SizeX, box2SizeY));
     }
 }

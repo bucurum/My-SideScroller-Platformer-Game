@@ -15202,11 +15202,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4505046548268324209, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 97.42
+      value: 43.681
       objectReference: {fileID: 0}
     - target: {fileID: 4505046548268324209, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.95
+      value: 20.244
       objectReference: {fileID: 0}
     - target: {fileID: 4505046548268324209, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -15241,12 +15241,44 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6337846600152788055, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
+      propertyPath: box1SizeX
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6337846600152788055, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
+      propertyPath: box1SizeY
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6337846600152788055, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
+      propertyPath: box2SizeX
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6337846600152788055, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
+      propertyPath: box2SizeY
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6337846600152788055, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 1179403301}
     - target: {fileID: 6337846600152788055, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
       propertyPath: swingForce
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6337846600152788055, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
+      propertyPath: box1OffsetX
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6337846600152788055, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
+      propertyPath: box1OffsetY
+      value: 0.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 6337846600152788055, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
+      propertyPath: box2OffsetX
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6337846600152788055, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
+      propertyPath: box2OffsetY
+      value: 0.42
       objectReference: {fileID: 0}
     - target: {fileID: 6337846600152788055, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
       propertyPath: lineRenderer

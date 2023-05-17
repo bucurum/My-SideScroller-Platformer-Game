@@ -18,7 +18,7 @@ public class PlayerHealthController : MonoBehaviour
     private float flashCounter;
 
     public SpriteRenderer spriteRenderer;
-    
+    private UIController uiController;
 
     void Awake()
     {
@@ -35,8 +35,9 @@ public class PlayerHealthController : MonoBehaviour
 
     void Start()
     {
+        uiController = UIController.instance; 
         currentHealth = maxHealth;
-        UIController.instance.UpdateHealth(currentHealth, maxHealth);
+        uiController.UpdateHealth(currentHealth, maxHealth);
     }
 
     void Update()
@@ -77,7 +78,7 @@ public class PlayerHealthController : MonoBehaviour
             {
                 invincibilityCounter = invincibilityLenght;
             }
-            UIController.instance.UpdateHealth(currentHealth, maxHealth);
+           uiController.UpdateHealth(currentHealth, maxHealth);
 
         }
         

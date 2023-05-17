@@ -40,25 +40,25 @@ public class PlayerAttack : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {  
             attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0); 
-            Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-            
-            foreach (Collider2D enemy in enemyHit)
-            {
-                enemy.GetComponent<EnemyHealthController>().DamageEnemy(damageAmount);
-            }
+            FindAndDamageEnemy();
             
         }
         if (Input.GetMouseButtonUp(1))
         {
             attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
-            Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-    
-            foreach (Collider2D enemy in enemyHit)
-            {
-                enemy.GetComponent<EnemyHealthController>().DamageEnemy(damageAmount * 2);
-            }
+            FindAndDamageEnemy();
         }
         
+    }
+
+    private void FindAndDamageEnemy()
+    {
+        Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+
+        foreach (Collider2D enemy in enemyHit)
+        {
+            enemy.GetComponent<EnemyHealthController>().DamageEnemy(damageAmount * 2);
+        }
     }
     
     void OnDrawGizmosSelected()
