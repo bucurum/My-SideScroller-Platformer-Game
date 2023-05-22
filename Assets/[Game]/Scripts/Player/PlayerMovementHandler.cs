@@ -67,13 +67,26 @@ public class PlayerMovementHandler : MonoBehaviour
     [SerializeField] Transform anchorTransform;
     private bool isConnectedAnchor;
     
-    [Header("LedgeClimb")]
-    private bool rayBox1;
-    private bool rayBox2;
-    public float box1OffsetX, box1OffsetY, box1SizeX, box1SizeY, box2OffsetX, box2OffsetY, box2SizeX, box2SizeY;
-    private bool isGrabbing;
-    private float startingGravity;
-    public LayerMask ledgeLayer;
+    //[Header("LedgeClimb")]
+    // private bool rayBox1;
+    // private bool rayBox2;
+    // public float box1OffsetX, box1OffsetY, box1SizeX, box1SizeY, box2OffsetX, box2OffsetY, box2SizeX, box2SizeY;
+    // private bool isGrabbing = false;
+    // private bool isClimbing = false;
+    // private float startingGravity;
+    // public LayerMask ledgeLayer;
+
+    [Header("LedgeInfo")]
+    [SerializeField] private Vector2 offset1;
+    [SerializeField] private Vector2 offset2;
+
+    private Vector2 climbBegunPosition;
+    private Vector2 climbOverPosition;
+
+    private bool canGrabLedge = true;
+    private bool canClimb;
+
+    [HideInInspector] public bool ledgeDetected;
 
     private float horizontal;
 
@@ -84,18 +97,10 @@ public class PlayerMovementHandler : MonoBehaviour
         animator = GetComponent<Animator>();
         canMove = true;
         distanceJoint2D.enabled = false;
-        startingGravity = rb.gravityScale;
+        // startingGravity = rb.gravityScale;
         
     }
     void Update()
-    {
-        Movement();
-
-        animator.SetFloat("yVelocity", rb.velocity.y);
-        animator.SetBool("jump", !isGrounded);   
-    }
-
-    private void Movement()
     {
         if (canMove)
         {
@@ -106,64 +111,101 @@ public class PlayerMovementHandler : MonoBehaviour
             WallSlide();
             WallJumping();
             Swinging();
-            ClimbLedge();
+            LedgeClimb();
         }
         else
         {
             rb.velocity = Vector2.zero;
         }
+
+        animator.SetFloat("yVelocity", rb.velocity.y);
+        animator.SetBool("jump", !isGrounded);
+        animator.SetBool("canClimb",canClimb);
+       // animator.SetBool("canGrabLedge", !canGrabLedge);
     }
 
-    private void ClimbLedge()
+    private void LedgeClimb()
     {
-        rayBox1 = Physics2D.OverlapBox(new Vector2(transform.position.x + (box1OffsetX * transform.localScale.x), transform.position.y + box1OffsetY), new Vector2(box1SizeX, box1SizeY), 0f ,ledgeLayer);
-        rayBox2 = Physics2D.OverlapBox(new Vector2(transform.position.x + (box2OffsetX * transform.localScale.x), transform.position.y + box2OffsetY), new Vector2(box2SizeX, box2SizeY), 0f ,ledgeLayer);
-        
-        if (rayBox2 && !rayBox1 && !isGrabbing)
+        if (ledgeDetected && canGrabLedge)
         {
-            isGrabbing = true;
-            animator.SetTrigger("isGrabbing");
-        }
-        Debug.Log(isGrabbing);
-        
-        if (isGrabbing)
-        {
-            rb.velocity = Vector2.zero;
-            rb.gravityScale = 0f;
-            
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                animator.SetTrigger("isClimbing");
-   
-                StartCoroutine(Climbing(new Vector2(transform.position.x + (1.2f * transform.localScale.x), transform.position.y + 2f), (this.animator.GetCurrentAnimatorStateInfo(0).normalizedTime - .3f)));    
-              
-                
-            }    
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                rb.gravityScale = startingGravity;
-                isGrabbing = false;
-            }
-            
-        }
+            canGrabLedge = false;
 
-    }
-    private IEnumerator Climbing(Vector2 position, float duration)
-    {
-        float time = 0;
-        Vector2 startValue = transform.position;
-        while (time < duration)
-        {
-            
-            transform.position = Vector2.Lerp(transform.position, position, time / duration);
-            time += Time.deltaTime;
-            yield return null;
+            Vector2 ledgePosition = GetComponentInChildren<LedgeDetection>().transform.position;
+
+            climbBegunPosition = ledgePosition + offset1;
+            climbOverPosition = ledgePosition + offset2;
+
+            // if (Input.GetKeyDown(KeyCode.W))
+            // {
+            //     canClimb = true;
+            // }
+            canClimb = true;
         }
-        rb.gravityScale = startingGravity;
-                
-        isGrabbing = false;
-        
+        if (canClimb)
+        {
+            transform.position = climbBegunPosition;
+        }
     }
+
+
+
+    // private void ClimbLedge()
+    // {
+    //     rayBox1 = Physics2D.OverlapBox(new Vector2(transform.position.x + (box1OffsetX * transform.localScale.x), transform.position.y + box1OffsetY), new Vector2(box1SizeX, box1SizeY), 0f ,ledgeLayer);
+    //     rayBox2 = Physics2D.OverlapBox(new Vector2(transform.position.x + (box2OffsetX * transform.localScale.x), transform.position.y + box2OffsetY), new Vector2(box2SizeX, box2SizeY), 0f ,ledgeLayer);
+
+    //     if (rayBox2 && !rayBox1 && !isGrabbing)
+    //     {
+    //         isGrabbing = true;  
+    //     }
+
+    //     if (isGrabbing)
+    //     {
+    //         animator.SetTrigger("isGrabbing");
+    //         rb.velocity = Vector2.zero;
+    //         rb.gravityScale = 0f;
+
+    //         if (Input.GetKeyDown(KeyCode.W))
+    //         {
+    //             Debug.Log("Hello there");
+    //             isClimbing = true;
+    //             StartCoroutine(WaitForAnimation("isClimbing" ,isClimbing));
+    //             rb.gravityScale = startingGravity;
+    //             isGrabbing = false;
+    //           //  StartCoroutine(Climbing(new Vector2(transform.position.x + (1.2f * transform.localScale.x), transform.position.y + 1.7f), .5f));    
+    //         } 
+
+    //         if (Input.GetKeyDown(KeyCode.S))
+    //         {
+    //             rb.gravityScale = startingGravity;
+    //             isGrabbing = false;
+    //         }   
+    //        // animator.SetBool("isClimbing", isClimbing);   
+    //     }
+
+    //     Debug.Log(isClimbing);
+
+    // }
+    // private IEnumerator WaitForAnimation(string animationName,bool animationBool)
+    // {
+    //     Debug.Log("genral kenobi");
+    //     animator.SetBool("isClimbing", true);
+    //     yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+    //     animator.SetBool("isClimbing", false);
+    // }
+    // private IEnumerator Climbing(Vector2 position, float duration)
+    // {
+    //     float time = 0;
+    //     Vector2 startValue = transform.position;
+    //     while (time < duration)
+    //     { 
+    //         transform.position = Vector2.Lerp(transform.position, position, time / duration);
+    //         time += Time.deltaTime;
+    //         yield return null;
+    //     }
+    //     rb.gravityScale = startingGravity;
+    //     isGrabbing = false;
+    // }
     private void Swinging()
     {
         isConnectedAnchor = Physics2D.OverlapCircle(transform.position, jointRange, anchorLayer);
@@ -359,11 +401,11 @@ public class PlayerMovementHandler : MonoBehaviour
         afterImageCounter = timeBetweenAfterImage;
     }
 
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(new Vector2(transform.position.x + (box1OffsetX * transform.localScale.x), transform.position.y + box1OffsetY), new Vector2(box1SizeX, box1SizeY));
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(new Vector2(transform.position.x + (box2OffsetX * transform.localScale.x), transform.position.y + box2OffsetY), new Vector2(box2SizeX, box2SizeY));
-    }
+    // void OnDrawGizmosSelected()
+    // {
+    //     Gizmos.color = Color.red;
+    //     Gizmos.DrawWireCube(new Vector2(transform.position.x + (box1OffsetX * transform.localScale.x), transform.position.y + box1OffsetY), new Vector2(box1SizeX, box1SizeY));
+    //     Gizmos.color = Color.blue;
+    //     Gizmos.DrawWireCube(new Vector2(transform.position.x + (box2OffsetX * transform.localScale.x), transform.position.y + box2OffsetY), new Vector2(box2SizeX, box2SizeY));
+    // }
 }
