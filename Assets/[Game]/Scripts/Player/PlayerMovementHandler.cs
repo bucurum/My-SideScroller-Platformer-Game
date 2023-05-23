@@ -99,13 +99,12 @@ public class PlayerMovementHandler : MonoBehaviour
             WallSlide();
             WallJumping();
             Swinging();
-            ClimbLedge();
         }
         else
         {
             rb.velocity = Vector2.zero;
         }
-        
+        ClimbLedge();
     }
     private void LeaveGrab() => isGrabbing = false;
     private void ClimbLedge()
@@ -117,12 +116,12 @@ public class PlayerMovementHandler : MonoBehaviour
         {
             isGrabbing = true;
             Invoke("LeaveGrab", .1f);
+            canMove = false;
         }
         
         if (isGrabbing)
         {
             canDoubleJump = false;
-            // TODO: if the player grabbing the ledge make the player cannot move or flip.
             rb.velocity = Vector2.zero;
             rb.gravityScale = 0f;
 
@@ -152,6 +151,7 @@ public class PlayerMovementHandler : MonoBehaviour
         }
         rb.gravityScale = startingGravity;
         animator.SetBool("isClimbing", false);
+        canMove = true;
     }
     private void Swinging()
     {
