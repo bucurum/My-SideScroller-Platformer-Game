@@ -64,6 +64,7 @@ public class PlayerMovementHandler : MonoBehaviour
     private bool isGrabbing;
     private float startingGravity;
     public LayerMask ledgeLayer;
+    private bool releaseGrab;
 
     private Vector2 climbBegunPosition;
     private Vector2 climbOverPosition;
@@ -86,7 +87,7 @@ public class PlayerMovementHandler : MonoBehaviour
         animator.SetFloat("yVelocity", rb.velocity.y);
         animator.SetBool("jump", !isGrounded);   
         animator.SetBool("isGrabbing", isGrabbing);
-        Debug.Log(canMove);
+        Debug.Log(releaseGrab);
     }
     private void Movement()
     {
@@ -112,7 +113,7 @@ public class PlayerMovementHandler : MonoBehaviour
         rayBox1 = Physics2D.OverlapBox(new Vector2(transform.position.x + (box1OffsetX * transform.localScale.x), transform.position.y + box1OffsetY), new Vector2(box1SizeX, box1SizeY), 0f ,ledgeLayer);
         rayBox2 = Physics2D.OverlapBox(new Vector2(transform.position.x + (box2OffsetX * transform.localScale.x), transform.position.y + box2OffsetY), new Vector2(box2SizeX, box2SizeY), 0f ,ledgeLayer);
         
-        if (rayBox2 && !rayBox1 && !isGrabbing)
+        if (rayBox2 && !rayBox1 && !isGrabbing && !releaseGrab)
         {
             isGrabbing = true;
             Invoke("LeaveGrab", .1f);
@@ -134,9 +135,9 @@ public class PlayerMovementHandler : MonoBehaviour
                 StartCoroutine(Climbing(new Vector2(transform.position.x + (1.2f * transform.localScale.x), transform.position.y + 1.6f), (.3f)));    
             }    
             if (Input.GetKeyDown(KeyCode.S))
-            {
-                rb.gravityScale = startingGravity;
-                isGrabbing = false;
+            {  
+                releaseGrab = true;
+                ReleaseGrab();
             }
         }
     }
@@ -153,6 +154,14 @@ public class PlayerMovementHandler : MonoBehaviour
         animator.SetBool("isClimbing", false);
         canMove = true;
     }
+    private void ReleaseGrab()
+    {
+        canMove = true;
+        rb.gravityScale = startingGravity;
+        isGrabbing = false;
+        Invoke("Release", .1f);
+    }
+    private void Release() => releaseGrab = false;
     private void Swinging()
     {
         isConnectedAnchor = Physics2D.OverlapCircle(transform.position, jointRange, anchorLayer);
