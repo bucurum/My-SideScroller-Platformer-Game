@@ -87,7 +87,6 @@ public class PlayerMovementHandler : MonoBehaviour
         animator.SetFloat("yVelocity", rb.velocity.y);
         animator.SetBool("jump", !isGrounded);   
         animator.SetBool("isGrabbing", isGrabbing);
-        Debug.Log(releaseGrab);
     }
     private void Movement()
     {

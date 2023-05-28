@@ -130,6 +130,36 @@ CapsuleCollider2D:
   m_Offset: {x: -0.09465796, y: -0.25168788}
   m_Size: {x: 1.1898004, y: 1.7425444}
   m_Direction: 0
+--- !u!1 &3517400871666190189
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5708201740708977382}
+  m_Layer: 0
+  m_Name: RangedAttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5708201740708977382
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3517400871666190189}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4505046548268324209}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3700145259831399403
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,7 +228,7 @@ Transform:
   - {fileID: 7174450117291690993}
   - {fileID: 8348813129390601931}
   - {fileID: 5757346208694317120}
-  - {fileID: 1704432971962795085}
+  - {fileID: 5708201740708977382}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -267,7 +297,17 @@ MonoBehaviour:
     m_Bits: 0
   lineRenderer: {fileID: 0}
   anchorTransform: {fileID: 0}
-  ledgeDetected: 0
+  box1OffsetX: 0
+  box1OffsetY: 0
+  box1SizeX: 0
+  box1SizeY: 0
+  box2OffsetX: 0
+  box2OffsetY: 0
+  box2SizeX: 0
+  box2SizeY: 0
+  ledgeLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &5778018828383244858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,12 +352,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9dc3485b8ce29e42993a47834ff4e1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weapon: {fileID: 11400000, guid: 68d0ab6e47b9b9245b709a309467f4b4, type: 2}
   attackPoint: {fileID: 5757346208694317120}
   attackRange: 0.85
   enemyLayers:
     serializedVersion: 2
     m_Bits: 256
   damageAmount: 10
+  meleeAtackPoint: {fileID: 9040205614952834853}
+  rangedAttackPoint: {fileID: 3517400871666190189}
 --- !u!212 &4505046549337128492
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -389,49 +432,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!1 &4844777864333797844
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1704432971962795085}
-  - component: {fileID: 7834795252377310850}
-  m_Layer: 0
-  m_Name: LedgeCheck
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1704432971962795085
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4844777864333797844}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4505046548268324209}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7834795252377310850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4844777864333797844}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37135c59b778d3744a3471f5bf04ef0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &9040205614952834853
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,7 +442,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5757346208694317120}
   m_Layer: 0
-  m_Name: AttackPoint
+  m_Name: MeleeAttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-
     [Header("Player Attack")]
+    public Weapon weapon;
     [SerializeField] Transform attackPoint;
     [SerializeField] float attackRange;
     [SerializeField] LayerMask enemyLayers;
@@ -14,39 +14,65 @@ public class PlayerAttack : MonoBehaviour
     private EnemyHealthController enemyHealthController;
     private Transform tempTransform;
     private PlayerMovementHandler player;
+
+    public GameObject meleeAtackPoint;
+    public GameObject rangedAttackPoint;
     void Start()
     {
-        player = PlayerHealthController.instance.GetComponent<PlayerMovementHandler>();   
+        Debug.Log(weapon.name);
+        player = PlayerHealthController.instance.GetComponent<PlayerMovementHandler>(); 
+        if (weapon.isRanged)
+        {
+            attackPoint = rangedAttackPoint.transform;
+            //TODO: if attack point is ranged change attack behaviour
+        }  
+        else
+        {
+            attackPoint = meleeAtackPoint.transform;
+        }
+        attackRange = weapon.attackRange;
+        damageAmount = weapon.damageAmount;
+        
     }
 
     void Update()
     {
-        if (Input.GetMouseButton(0) && Input.GetKey(KeyCode.S) && player.isfallAttacking)
+        if (attackPoint == meleeAtackPoint.transform)
         {
-            attackPoint.localPosition = new Vector3(0, -1, 0);
-            Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, (attackRange * 1.5f), enemyLayers);
-            
-            foreach (Collider2D enemy in enemyHit)
+            if (Input.GetMouseButton(0) && Input.GetKey(KeyCode.S) && player.isfallAttacking)
             {
-                enemy.GetComponent<EnemyHealthController>().DamageEnemy(damageAmount);
-                if (enemy.CompareTag("EnemyWalker"))
+                attackPoint.localPosition = new Vector3(0, -1, 0);
+                Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, (attackRange * 1.5f), enemyLayers);
+
+                foreach (Collider2D enemy in enemyHit)
                 {
-                    player.rb.velocity = new Vector2(player.rb.velocity.x, 20);
+                    enemy.GetComponent<EnemyHealthController>().DamageEnemy(damageAmount);
+                    if (enemy.CompareTag("EnemyWalker"))
+                    {
+                        player.rb.velocity = new Vector2(player.rb.velocity.x, 20);
+                    }
                 }
+
             }
-            
+
+            if (Input.GetMouseButtonDown(0) && weapon.weaponName == "Sword")
+            {  
+                attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0); 
+                FindAndDamageEnemy();
+
+            }
+            if (Input.GetMouseButtonUp(1))
+            {
+                attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
+                FindAndDamageEnemy();
+            }
         }
-        
-        if (Input.GetMouseButtonDown(0))
-        {  
-            attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0); 
-            FindAndDamageEnemy();
-            
-        }
-        if (Input.GetMouseButtonUp(1))
+        else
         {
-            attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
-            FindAndDamageEnemy();
+            if (Input.GetMouseButtonDown(0))
+            {
+                Instantiate(weapon.arrow, attackPoint.position, attackPoint.rotation);
+            }
         }
         
     }
@@ -60,6 +86,8 @@ public class PlayerAttack : MonoBehaviour
             enemy.GetComponent<EnemyHealthController>().DamageEnemy(damageAmount * 2);
         }
     }
+
+    
     
     void OnDrawGizmosSelected()
     {

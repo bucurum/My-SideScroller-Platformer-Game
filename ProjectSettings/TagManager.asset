@@ -8,6 +8,7 @@ TagManager:
   - Spawner
   - attackPoint
   - EnemyWalker
+  - rangedAttackPoint
   layers:
   - Default
   - TransparentFX
