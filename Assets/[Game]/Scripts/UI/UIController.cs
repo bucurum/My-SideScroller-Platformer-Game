@@ -24,7 +24,6 @@ public class UIController : MonoBehaviour
         {
             Destroy(gameObject);
         }
-       
     }
     void Start()
     {

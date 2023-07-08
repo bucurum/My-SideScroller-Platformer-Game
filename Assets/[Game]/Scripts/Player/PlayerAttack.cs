@@ -67,12 +67,22 @@ public class PlayerAttack : MonoBehaviour
                 FindAndDamageEnemy();
             }
         }
-        else
+        else 
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Instantiate(weapon.arrow, attackPoint.position, attackPoint.rotation);
+                if (player.isFacingRight)
+                {
+                    Instantiate(weapon.projectile, attackPoint.position, Quaternion.Euler(0,0,-90));
+                    weapon.moveDirection = new Vector2(transform.localScale.x, 0);
+                }
+                else
+                {
+                    Instantiate(weapon.projectile, attackPoint.position, Quaternion.Euler(0,0,90));
+                    weapon.moveDirection = new Vector2(transform.localScale.x, 0);
+                }
             }
+
         }
         
     }

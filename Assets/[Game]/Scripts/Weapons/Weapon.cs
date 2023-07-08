@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Weapon")]
 public class Weapon : ScriptableObject
 {
-    public GameObject arrow;
+    public GameObject projectile;
     public string weaponName;
     public int damageAmount;
     public Transform attackPoint;
@@ -13,7 +13,6 @@ public class Weapon : ScriptableObject
     public bool isRanged;
     public Vector2 moveDirection;
 
-    
 
     //TODO: if attackPoint is null use the player`s attack point
 }

@@ -9,18 +9,19 @@ TagManager:
   - attackPoint
   - EnemyWalker
   - rangedAttackPoint
+  - Shot
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - NoCollision
   - Water
   - UI
   - Ground
   - Walls
   - Enemies
   - Anchor
-  - 
+  - Projectiles
   - 
   - 
   - 

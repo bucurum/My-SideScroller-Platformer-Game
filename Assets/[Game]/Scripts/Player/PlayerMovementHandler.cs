@@ -10,7 +10,7 @@ public class PlayerMovementHandler : MonoBehaviour
     [SerializeField] float crouchSpeed = 1f;
     public Animator animator;
     public bool canMove;
-    private bool isFacingRight;
+    public bool isFacingRight;
     private float fallAttackSpeed = 50;
     [HideInInspector] public bool isfallAttacking;
     [Header("WallSlide")]

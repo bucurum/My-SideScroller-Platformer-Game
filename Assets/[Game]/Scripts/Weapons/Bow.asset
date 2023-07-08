@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e562b3d0107c2c49808c5f6533fab27, type: 3}
   m_Name: Bow
   m_EditorClassIdentifier: 
-  arrow: {fileID: 5005369640774961465, guid: 83baf6d24ea88b24ab4a00ec2131ee73, type: 3}
+  projectile: {fileID: 5005369640774961465, guid: 83baf6d24ea88b24ab4a00ec2131ee73, type: 3}
   weaponName: Bow
   damageAmount: 14
   attackPoint: {fileID: 0}

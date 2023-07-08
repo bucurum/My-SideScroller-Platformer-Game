@@ -15650,6 +15650,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelCamera
       objectReference: {fileID: 0}
+    - target: {fileID: 5762053692426480440, guid: 2d9faecbe67a70d40ae9998d6abdb62c, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5762053692426480446, guid: 2d9faecbe67a70d40ae9998d6abdb62c, type: 3}
       propertyPath: m_Size.y
       value: 52.1338
@@ -15860,6 +15864,10 @@ PrefabInstance:
     - target: {fileID: 5005369640774961465, guid: 83baf6d24ea88b24ab4a00ec2131ee73, type: 3}
       propertyPath: m_Name
       value: Arrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 5005369640774961465, guid: 83baf6d24ea88b24ab4a00ec2131ee73, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83baf6d24ea88b24ab4a00ec2131ee73, type: 3}
