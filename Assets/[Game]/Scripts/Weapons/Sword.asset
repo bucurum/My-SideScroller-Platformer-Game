@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e562b3d0107c2c49808c5f6533fab27, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
+  projectile: {fileID: 0}
   weaponName: Sword
-  damageAmount: 11
+  damageAmount: 10
   attackPoint: {fileID: 0}
   attackRange: 1
+  isRanged: 0
+  moveDirection: {x: 0, y: 0}

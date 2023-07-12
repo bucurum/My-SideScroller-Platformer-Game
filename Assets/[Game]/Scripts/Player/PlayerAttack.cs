@@ -6,10 +6,10 @@ public class PlayerAttack : MonoBehaviour
 {
     [Header("Player Attack")]
     public Weapon weapon;
-    [SerializeField] Transform attackPoint;
-    [SerializeField] float attackRange;
+    private Transform attackPoint;
+    private float attackRange;
     [SerializeField] LayerMask enemyLayers;
-    [SerializeField] int damageAmount = 1;
+    private int damageAmount = 1;
     private bool isHit;
     private EnemyHealthController enemyHealthController;
     private Transform tempTransform;
@@ -64,6 +64,7 @@ public class PlayerAttack : MonoBehaviour
             if (Input.GetMouseButtonUp(1))
             {
                 attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
+                damageAmount *= 2;
                 FindAndDamageEnemy();
             }
         }
@@ -93,7 +94,7 @@ public class PlayerAttack : MonoBehaviour
 
         foreach (Collider2D enemy in enemyHit)
         {
-            enemy.GetComponent<EnemyHealthController>().DamageEnemy(damageAmount * 2);
+            enemy.GetComponent<EnemyHealthController>().DamageEnemy(damageAmount);
         }
     }
 

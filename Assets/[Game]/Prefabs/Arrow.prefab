@@ -122,7 +122,7 @@ MonoBehaviour:
   arrowSpeed: 10
   rb: {fileID: 5005369640774961442}
   moveDirection: {x: 1, y: 0}
-  damageAmount: 10
+  damageAmount: 15
 --- !u!61 &4547480108080990516
 BoxCollider2D:
   m_ObjectHideFlags: 0
