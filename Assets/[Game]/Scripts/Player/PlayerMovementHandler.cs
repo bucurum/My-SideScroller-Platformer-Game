@@ -68,6 +68,7 @@ public class PlayerMovementHandler : MonoBehaviour
 
     private Vector2 climbBegunPosition;
     private Vector2 climbOverPosition;
+    private Weapon weapon;
 
     private float horizontal;
   
@@ -79,6 +80,7 @@ public class PlayerMovementHandler : MonoBehaviour
         canMove = true;
         distanceJoint2D.enabled = false;
         startingGravity = rb.gravityScale;
+        weapon = GetComponent<PlayerAttack>().weapon;
         
     }
     void Update()
@@ -195,29 +197,51 @@ public class PlayerMovementHandler : MonoBehaviour
     }
     private void Attack()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (weapon.name == "Sword")
         {
-            animator.SetTrigger("attack");
+            if (Input.GetMouseButtonDown(0) )
+            {
+                animator.SetTrigger("attack");
+            }
+            if (Input.GetMouseButtonDown(0) && Input.GetKey(KeyCode.S) && !isGrounded)
+            {
+                isfallAttacking = true;
+                animator.SetTrigger("fallAttack");
+            }
+            else
+            {
+                isfallAttacking = false;
+            }
+
+            if (Input.GetMouseButton(1) && !isConnectedAnchor)
+            {
+                rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * crouchSpeed, rb.velocity.y);
+                animator.SetTrigger("heavyAttack");
+            }
+            if (Input.GetMouseButtonUp(1) && !isConnectedAnchor)
+            {
+                animator.SetBool("heavyRelease", true);
+            }
         }
-        if (Input.GetMouseButtonDown(0) && Input.GetKey(KeyCode.S) && !isGrounded)
+        else if (weapon.name == "Bow")
         {
-            isfallAttacking = true;
-            animator.SetTrigger("fallAttack");
-        }
-        else
-        {
-            isfallAttacking = false;
+            if (Input.GetMouseButtonDown(0))
+            {
+                animator.SetTrigger("bowAttack");
+            }
+            if (Input.GetMouseButton(0))
+            {
+                rb.velocity = new Vector2(0, 0);
+                animator.SetBool("bowRelease", false);
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                animator.SetBool("bowRelease", true);
+            }
+            
         }
         
-        if (Input.GetMouseButton(1) && !isConnectedAnchor)
-        {
-            rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * crouchSpeed, rb.velocity.y);
-            animator.SetTrigger("heavyAttack");
-        }
-        if (Input.GetMouseButtonUp(1) && !isConnectedAnchor)
-        {
-            animator.SetBool("heavyRelease", true);
-        }
+        
     }
     private void Jump()
     {

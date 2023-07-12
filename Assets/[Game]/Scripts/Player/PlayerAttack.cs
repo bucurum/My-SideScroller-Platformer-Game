@@ -66,11 +66,12 @@ public class PlayerAttack : MonoBehaviour
                 attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
                 damageAmount *= 2;
                 FindAndDamageEnemy();
+                damageAmount /= 2;
             }
         }
         else 
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonUp(0))
             {
                 if (player.isFacingRight)
                 {
