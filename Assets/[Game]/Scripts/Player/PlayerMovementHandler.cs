@@ -101,7 +101,6 @@ public class PlayerMovementHandler : MonoBehaviour
             Crouch();
             WallSlide();
             WallJumping();
-            Swinging();
         }
         else
         {
@@ -166,22 +165,7 @@ public class PlayerMovementHandler : MonoBehaviour
     private void Release() => releaseGrab = false;
     private void Swinging()
     {
-        isConnectedAnchor = Physics2D.OverlapCircle(transform.position, jointRange, anchorLayer);
-        if (Input.GetMouseButton(1) && isConnectedAnchor)
-        {
-            prevVelocity = rb.velocity;
-            rb.velocity = prevVelocity * new Vector2(2f, 1f);
-            lineRenderer.positionCount = 2;
-            lineRenderer.SetPosition(0, anchorTransform.position);
-            lineRenderer.SetPosition(1, transform.position);
-            lineRenderer.enabled = true;
-            distanceJoint2D.enabled = true;
-        }
-        if (Input.GetMouseButtonUp(1))
-        {
-            distanceJoint2D.enabled = false;
-            lineRenderer.enabled = false;  
-        }
+        
     }
     private void Crouch()
     {
@@ -248,7 +232,22 @@ public class PlayerMovementHandler : MonoBehaviour
             {
                 animator.SetBool("bowRelease", true);
             }
-            
+            isConnectedAnchor = Physics2D.OverlapCircle(transform.position, jointRange, anchorLayer);
+            if (Input.GetMouseButton(1) && isConnectedAnchor)
+            {
+                prevVelocity = rb.velocity;
+                rb.velocity = prevVelocity * new Vector2(2f, 1f);
+                lineRenderer.positionCount = 2;
+                lineRenderer.SetPosition(0, anchorTransform.position);
+                lineRenderer.SetPosition(1, transform.position);
+                lineRenderer.enabled = true;
+                distanceJoint2D.enabled = true;
+            }
+            if (Input.GetMouseButtonUp(1))
+            {
+                distanceJoint2D.enabled = false;
+                lineRenderer.enabled = false;  
+            }
         }
         
         
