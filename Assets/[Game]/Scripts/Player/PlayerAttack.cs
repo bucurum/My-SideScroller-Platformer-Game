@@ -17,6 +17,10 @@ public class PlayerAttack : MonoBehaviour
 
     public GameObject meleeAtackPoint;
     public GameObject rangedAttackPoint;
+
+    private float holdDownStartTime;
+    private float holdDownTime;
+
     void Start()
     {
         Debug.Log(weapon.name);
@@ -61,12 +65,25 @@ public class PlayerAttack : MonoBehaviour
                 FindAndDamageEnemy();
 
             }
+            if (Input.GetMouseButtonDown(1))
+            {
+                holdDownStartTime = Time.time;
+                player.heavyAttackHolded = false;
+            }
             if (Input.GetMouseButtonUp(1))
             {
-                attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
-                damageAmount *= 2;
-                FindAndDamageEnemy();
-                damageAmount /= 2;
+                
+                holdDownTime = Time.time -  holdDownStartTime;
+                if (holdDownTime > .5)
+                {
+                    player.heavyAttackHolded = true;
+                    attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
+                    damageAmount *= 2;
+                    FindAndDamageEnemy();
+                    damageAmount /= 2;
+                    
+                }
+                
             }
         }
         else 

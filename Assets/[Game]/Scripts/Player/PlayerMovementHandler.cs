@@ -71,6 +71,7 @@ public class PlayerMovementHandler : MonoBehaviour
     private Weapon weapon;
 
     private float horizontal;
+    public bool heavyAttackHolded = false;
   
     void Start()
     {
@@ -220,8 +221,17 @@ public class PlayerMovementHandler : MonoBehaviour
             }
             if (Input.GetMouseButtonUp(1) && !isConnectedAnchor)
             {
-                animator.SetBool("heavyRelease", true);
+                if (heavyAttackHolded)
+                {
+                    animator.SetBool("heavyRelease", true);
+                }
+                else
+                {
+                    animator.SetBool("heavyRelease", false);
+                } 
             }
+
+
         }
         else if (weapon.name == "Bow")
         {
