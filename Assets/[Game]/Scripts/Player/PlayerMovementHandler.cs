@@ -225,7 +225,7 @@ public class PlayerMovementHandler : MonoBehaviour
             }
             if (Input.GetMouseButton(0))
             {
-                rb.velocity = new Vector2(0, 0);
+                rb.velocity = new Vector2(0, rb.velocity.y);
                 animator.SetBool("bowRelease", false);
             }
             if (Input.GetMouseButtonUp(0))

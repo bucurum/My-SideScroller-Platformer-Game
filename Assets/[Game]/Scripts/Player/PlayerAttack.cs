@@ -10,39 +10,53 @@ public class PlayerAttack : MonoBehaviour
     private float attackRange;
     [SerializeField] LayerMask enemyLayers;
     private int damageAmount = 1;
-    private bool isHit;
     private EnemyHealthController enemyHealthController;
     private Transform tempTransform;
     private PlayerMovementHandler player;
 
-    public GameObject meleeAtackPoint;
-    public GameObject rangedAttackPoint;
+    [HideInInspector] public GameObject meleeAtackPoint;
+    [HideInInspector] public GameObject rangedAttackPoint;
 
     private float holdDownStartTime;
     private float holdDownTime;
 
     void Start()
     {
+        
         Debug.Log(weapon.name);
         player = PlayerHealthController.instance.GetComponent<PlayerMovementHandler>(); 
         if (weapon.isRanged)
         {
             attackPoint = rangedAttackPoint.transform;
-            //TODO: if attack point is ranged change attack behaviour
         }  
         else
         {
             attackPoint = meleeAtackPoint.transform;
         }
-        attackRange = weapon.attackRange;
-        damageAmount = weapon.damageAmount;
-        
+        setWeaponValues();
     }
 
     void Update()
     {
-        if (attackPoint == meleeAtackPoint.transform)
+        ChangeWeapon();
+        // if (Input.GetKeyDown(KeyCode.Alpha1))
+        // {
+        //     weapon = Resources.Load<Weapon>("Assets/[Game]/Scripts/Weapons/Sword.asset");
+        // }
+        // if (Input.GetKeyDown(KeyCode.Alpha2))
+        // {
+        //     weapon = Resources.Load<Weapon>("Assets/[Game]/Scripts/Weapons/Bow.asset");
+        // }
+        
+    }
+
+    private void ChangeWeapon()
+    {
+        if (weapon.name == "Sword")
         {
+            
+            attackPoint = meleeAtackPoint.transform;
+            setWeaponValues();
             if (Input.GetMouseButton(0) && Input.GetKey(KeyCode.S) && player.isfallAttacking)
             {
                 attackPoint.localPosition = new Vector3(0, -1, 0);
@@ -60,8 +74,8 @@ public class PlayerAttack : MonoBehaviour
             }
 
             if (Input.GetMouseButtonDown(0) && weapon.weaponName == "Sword")
-            {  
-                attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0); 
+            {
+                attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
                 FindAndDamageEnemy();
 
             }
@@ -72,8 +86,8 @@ public class PlayerAttack : MonoBehaviour
             }
             if (Input.GetMouseButtonUp(1))
             {
-                
-                holdDownTime = Time.time -  holdDownStartTime;
+
+                holdDownTime = Time.time - holdDownStartTime;
                 if (holdDownTime > .5)
                 {
                     player.heavyAttackHolded = true;
@@ -81,29 +95,36 @@ public class PlayerAttack : MonoBehaviour
                     damageAmount *= 2;
                     FindAndDamageEnemy();
                     damageAmount /= 2;
-                    
+
                 }
-                
+
             }
         }
-        else 
+        else
         {
+            attackPoint = rangedAttackPoint.transform;
+            setWeaponValues();
             if (Input.GetMouseButtonUp(0))
             {
-                if (player.isFacingRight)
+                if (!player.isFacingRight)
                 {
-                    Instantiate(weapon.projectile, attackPoint.position, Quaternion.Euler(0,0,-90));
+                    Instantiate(weapon.projectile, attackPoint.position, Quaternion.Euler(0, 0, 90));
                     weapon.moveDirection = new Vector2(transform.localScale.x, 0);
                 }
                 else
                 {
-                    Instantiate(weapon.projectile, attackPoint.position, Quaternion.Euler(0,0,90));
+                    Instantiate(weapon.projectile, attackPoint.position, Quaternion.Euler(0, 0, -90));
                     weapon.moveDirection = new Vector2(transform.localScale.x, 0);
                 }
             }
 
         }
-        
+    }
+
+    private void setWeaponValues()
+    {
+        attackRange = weapon.attackRange;
+        damageAmount = weapon.damageAmount;
     }
 
     private void FindAndDamageEnemy()
