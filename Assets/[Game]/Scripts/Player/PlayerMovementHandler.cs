@@ -81,11 +81,10 @@ public class PlayerMovementHandler : MonoBehaviour
         canMove = true;
         distanceJoint2D.enabled = false;
         startingGravity = rb.gravityScale;
-        weapon = GetComponent<PlayerAttack>().weapon;
-        
     }
     void Update()
     {
+        weapon = GetComponent<PlayerAttack>().weapon;
         Movement();
         animator.SetFloat("yVelocity", rb.velocity.y);
         animator.SetBool("jump", !isGrounded);   
@@ -182,6 +181,7 @@ public class PlayerMovementHandler : MonoBehaviour
     }
     private void Attack()
     {
+        Debug.Log(weapon.name);
         if (weapon.name == "Sword")
         {
             if (Input.GetMouseButtonDown(0) )
@@ -252,6 +252,7 @@ public class PlayerMovementHandler : MonoBehaviour
         
         
     }
+
     private void Jump()
     {
         isGrounded = Physics2D.OverlapCircle(groundPoint.position, .2f, groundLayer);

@@ -18,4 +18,5 @@ MonoBehaviour:
   attackPoint: {fileID: 0}
   attackRange: 20
   isRanged: 1
-  moveDirection: {x: 1, y: 0}
+  moveDirection: {x: -1, y: 0}
+  animatorOverride: {fileID: 22100000, guid: 0a4ce2f4e97c7df47bb9bb7a58ef198f, type: 2}

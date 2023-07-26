@@ -6,6 +6,8 @@ public class PlayerAttack : MonoBehaviour
 {
     [Header("Player Attack")]
     public Weapon weapon;
+    [HideInInspector][SerializeField] Weapon sword;
+    [HideInInspector][SerializeField] Weapon bow;
     private Transform attackPoint;
     private float attackRange;
     [SerializeField] LayerMask enemyLayers;
@@ -19,42 +21,49 @@ public class PlayerAttack : MonoBehaviour
 
     private float holdDownStartTime;
     private float holdDownTime;
+    Animator animator;
 
     void Start()
     {
+        animator = GetComponent<Animator>();
+        // currentWeapon = weapon;
         
-        Debug.Log(weapon.name);
         player = PlayerHealthController.instance.GetComponent<PlayerMovementHandler>(); 
-        if (weapon.isRanged)
+        if (!weapon.isRanged)
         {
-            attackPoint = rangedAttackPoint.transform;
+            attackPoint = meleeAtackPoint.transform;
         }  
         else
         {
-            attackPoint = meleeAtackPoint.transform;
+            attackPoint = rangedAttackPoint.transform;
         }
         setWeaponValues();
     }
 
     void Update()
     {
-        ChangeWeapon();
-        // if (Input.GetKeyDown(KeyCode.Alpha1))
-        // {
-        //     weapon = Resources.Load<Weapon>("Assets/[Game]/Scripts/Weapons/Sword.asset");
-        // }
-        // if (Input.GetKeyDown(KeyCode.Alpha2))
-        // {
-        //     weapon = Resources.Load<Weapon>("Assets/[Game]/Scripts/Weapons/Bow.asset");
-        // }
         
+        WeaponAttack();
+        ChangeWeapon();
+
     }
 
     private void ChangeWeapon()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            weapon = sword;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            weapon = bow;
+        }
+    }
+
+    private void WeaponAttack()
+    {
         if (weapon.name == "Sword")
         {
-            
             attackPoint = meleeAtackPoint.transform;
             setWeaponValues();
             if (Input.GetMouseButton(0) && Input.GetKey(KeyCode.S) && player.isfallAttacking)
@@ -100,7 +109,7 @@ public class PlayerAttack : MonoBehaviour
 
             }
         }
-        else
+        else if(weapon.name == "Bow")
         {
             attackPoint = rangedAttackPoint.transform;
             setWeaponValues();
@@ -125,6 +134,7 @@ public class PlayerAttack : MonoBehaviour
     {
         attackRange = weapon.attackRange;
         damageAmount = weapon.damageAmount;
+        animator.runtimeAnimatorController = weapon.animatorOverride;
     }
 
     private void FindAndDamageEnemy()

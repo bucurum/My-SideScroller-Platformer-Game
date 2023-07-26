@@ -13,6 +13,8 @@ public class Weapon : ScriptableObject
     public bool isRanged;
     public Vector2 moveDirection;
 
+    public AnimatorOverrideController animatorOverride = null;
+
 
     //TODO: if attackPoint is null use the player`s attack point
 }
