@@ -15271,6 +15271,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 5922b06cbf931f84d887d01d0b20783c, type: 2}
     - target: {fileID: 8017726832817331072, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
+      propertyPath: Hand
+      value: 
+      objectReference: {fileID: 11400000, guid: f52aaf3a7f939fd45af59164f2d5e390, type: 2}
+    - target: {fileID: 8017726832817331072, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
+      propertyPath: hand
+      value: 
+      objectReference: {fileID: 11400000, guid: f52aaf3a7f939fd45af59164f2d5e390, type: 2}
+    - target: {fileID: 8017726832817331072, guid: 6112aa0d78e462b4791b2be25d038c1f, type: 3}
       propertyPath: sword
       value: 
       objectReference: {fileID: 11400000, guid: 68d0ab6e47b9b9245b709a309467f4b4, type: 2}

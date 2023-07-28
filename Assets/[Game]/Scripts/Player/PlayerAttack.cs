@@ -6,6 +6,8 @@ public class PlayerAttack : MonoBehaviour
 {
     [Header("Player Attack")]
     public Weapon weapon;
+
+    [HideInInspector][SerializeField] Weapon hand;
     [HideInInspector][SerializeField] Weapon sword;
     [HideInInspector][SerializeField] Weapon bow;
     private Transform attackPoint;
@@ -22,6 +24,9 @@ public class PlayerAttack : MonoBehaviour
     private float holdDownStartTime;
     private float holdDownTime;
     Animator animator;
+
+    public int combo;
+    public bool attacker;
 
     void Start()
     {
@@ -41,20 +46,22 @@ public class PlayerAttack : MonoBehaviour
     }
 
     void Update()
-    {
-        
+    {  
         WeaponAttack();
         ChangeWeapon();
-
     }
 
     private void ChangeWeapon()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            weapon = sword;
+            weapon = hand;
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            weapon = sword;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             weapon = bow;
         }
@@ -128,6 +135,28 @@ public class PlayerAttack : MonoBehaviour
             }
 
         }
+        else if (weapon.name == "Hand")
+        {
+            if (Input.GetMouseButtonDown(0) && !attacker)
+            {
+                attacker = true;
+                animator.SetTrigger(""+combo);
+            }
+        }
+    }
+
+    public void StartCombo()
+    {
+        attacker = false;
+        if (combo < 3)
+        {
+            combo++;
+        }
+    }
+    public void FinisAnimation()
+    {
+        attacker = false;
+        combo = 0;
     }
 
     private void setWeaponValues()
@@ -146,6 +175,7 @@ public class PlayerAttack : MonoBehaviour
             enemy.GetComponent<EnemyHealthController>().DamageEnemy(damageAmount);
         }
     }
+
 
     
     
