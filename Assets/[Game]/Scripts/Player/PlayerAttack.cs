@@ -28,6 +28,18 @@ public class PlayerAttack : MonoBehaviour
     public int combo;
     public bool attacker;
 
+    [Header("Combo")]
+    
+
+    // Insert your character's animator reference here
+    private float lastAttackTime; // Last time an attack occurred
+    private int comboCount; // Number of consecutive attacks in the combo
+
+    // Three different attack animation names
+    public string attackAnimation1 = "HandCombat1";
+    public string attackAnimation2 = "HandCombat2";
+    public string attackAnimation3 = "HandCombat3";
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -137,33 +149,26 @@ public class PlayerAttack : MonoBehaviour
         }
         else if (weapon.name == "Hand")
         {
-            if (Input.GetMouseButtonDown(0) && !attacker)
+            attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
+            setWeaponValues();
+
+            if (Input.GetMouseButtonDown(0))
             {
-                attacker = true;
-                animator.SetTrigger(""+combo);
+                
+                HandleMeleeAttack();
             }
         }
-    }
-
-    public void StartCombo()
-    {
-        attacker = false;
-        if (combo < 3)
-        {
-            combo++;
-        }
-    }
-    public void FinisAnimation()
-    {
-        attacker = false;
-        combo = 0;
     }
 
     private void setWeaponValues()
     {
         attackRange = weapon.attackRange;
         damageAmount = weapon.damageAmount;
-        animator.runtimeAnimatorController = weapon.animatorOverride;
+        if (weapon.animatorOverride != null)
+        {
+            animator.runtimeAnimatorController = weapon.animatorOverride;
+        }
+        
     }
 
     private void FindAndDamageEnemy()
@@ -176,9 +181,6 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-
-    
-    
     void OnDrawGizmosSelected()
     {
         if (attackPoint == null)
@@ -187,4 +189,53 @@ public class PlayerAttack : MonoBehaviour
         }
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
+
+    private void HandleMeleeAttack()
+    {
+        // Check if enough time has passed to reset the combo chain
+        if (Time.time - lastAttackTime > .5f)
+        {
+            comboCount = 0;
+        }
+
+        // Increment the combo count (limited by maxComboCount)
+        if (comboCount < 3)
+        {
+            comboCount++;
+        }
+        else
+        {
+            comboCount = 0;
+        }
+        
+
+        // Play the corresponding attack animation based on the combo count
+        switch (comboCount)
+        {
+            case 1:
+                PlayAttackAnimation(attackAnimation1);
+                FindAndDamageEnemy();
+                break;
+            case 2:
+                PlayAttackAnimation(attackAnimation2);
+                FindAndDamageEnemy();
+                break;
+            case 3:
+                PlayAttackAnimation(attackAnimation3);
+                FindAndDamageEnemy();
+                break;
+        }
+
+        lastAttackTime = Time.time;
+    }
+
+    private void PlayAttackAnimation(string animName)
+    {
+        // Play the specified attack animation in the animator
+        if (animator != null)
+        {
+            animator.SetTrigger(animName);
+        }
+    }
+
 }
