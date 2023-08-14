@@ -13,12 +13,14 @@ public class PlayerMovementHandler : MonoBehaviour
     public bool isFacingRight;
     private float fallAttackSpeed = 50;
     [HideInInspector] public bool isfallAttacking;
+
     [Header("WallSlide")]
     private bool isWalled;
     private bool isWallSliding;
     [SerializeField] float wallSlidingSpeed = 1f;
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
+
     [Header("WallJumping")]
     private bool isWallJumping;
     private float wallJumpingDirection;
@@ -34,8 +36,10 @@ public class PlayerMovementHandler : MonoBehaviour
     public LayerMask groundLayer;
     private bool canDoubleJump;
     private bool jumping;
+
     [Header("Abilities")]
     public PlayerAbilityTracker abilities;
+
     [Header("Player_Dash")]
     [SerializeField] float dashSpeed;
     [SerializeField] float dashTime;
@@ -48,6 +52,7 @@ public class PlayerMovementHandler : MonoBehaviour
     private float afterImageCounter;
     [SerializeField] Color afterImageColor;
     [SerializeField] float waitAfterDashing;
+
     [Header("SwingMechanic")]
     [SerializeField] private DistanceJoint2D distanceJoint2D;
     [SerializeField] private LayerMask anchorLayer;
@@ -72,12 +77,14 @@ public class PlayerMovementHandler : MonoBehaviour
 
     private float horizontal;
     public bool heavyAttackHolded = false;
+    private PlayerAttack playerAttack;
   
     void Start()
     {
         rb.GetComponent<Rigidbody2D>();
         abilities = GetComponent<PlayerAbilityTracker>();
         animator = GetComponent<Animator>();
+        playerAttack = GetComponent<PlayerAttack>();
         canMove = true;
         distanceJoint2D.enabled = false;
         startingGravity = rb.gravityScale;
@@ -181,76 +188,91 @@ public class PlayerMovementHandler : MonoBehaviour
     }
     private void Attack()
     {
-        Debug.Log(weapon.name);
-        if (weapon.name == "Sword")
+        if (playerAttack.canAttack)
         {
-            if (Input.GetMouseButtonDown(0) )
+            
+            if (weapon.name == "Sword")
             {
-                animator.SetTrigger("attack");
-            }
-            if (Input.GetMouseButtonDown(0) && Input.GetKey(KeyCode.S) && !isGrounded)
-            {
-                isfallAttacking = true;
-                animator.SetTrigger("fallAttack");
-            }
-            else
-            {
-                isfallAttacking = false;
-            }
-
-            if (Input.GetMouseButton(1) && !isConnectedAnchor)
-            {
-                rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * crouchSpeed, rb.velocity.y);
-                animator.SetTrigger("heavyAttack");
-            }
-            if (Input.GetMouseButtonUp(1) && !isConnectedAnchor)
-            {
-                if (heavyAttackHolded)
+                if (Input.GetMouseButtonDown(0))
                 {
-                    animator.SetBool("heavyRelease", true);
+                    animator.SetTrigger("attack");
+                    StartCoroutine(DelayAttack());
+                }
+                if (Input.GetMouseButtonDown(0) && Input.GetKey(KeyCode.S) && !isGrounded)
+                {
+                    isfallAttacking = true;
+                    animator.SetTrigger("fallAttack");
                 }
                 else
                 {
-                    animator.SetBool("heavyRelease", false);
-                } 
+                    isfallAttacking = false;
+                }
+    
+                if (Input.GetMouseButton(1) && !isConnectedAnchor)
+                {
+                    rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * crouchSpeed, rb.velocity.y);
+                    animator.SetTrigger("heavyAttack");
+                }
+                if (Input.GetMouseButtonUp(1) && !isConnectedAnchor)
+                {
+                    if (heavyAttackHolded)
+                    {
+                        animator.SetBool("heavyRelease", true);
+                    }
+                    else
+                    {
+                        animator.SetBool("heavyRelease", false);
+                    } 
+                }
+    
+    
             }
-
-
-        }
-        else if (weapon.name == "Bow")
-        {
-            if (Input.GetMouseButtonDown(0))
+            else if (weapon.name == "Bow")
             {
-                animator.SetTrigger("bowAttack");
-            }
-            if (Input.GetMouseButton(0))
-            {
-                rb.velocity = new Vector2(0, rb.velocity.y);
-                animator.SetBool("bowRelease", false);
-            }
-            if (Input.GetMouseButtonUp(0))
-            {
-                animator.SetBool("bowRelease", true);
-            }
-            isConnectedAnchor = Physics2D.OverlapCircle(transform.position, jointRange, anchorLayer);
-            if (Input.GetMouseButton(1) && isConnectedAnchor)
-            {
-                prevVelocity = rb.velocity;
-                rb.velocity = prevVelocity * new Vector2(2f, 1f);
-                lineRenderer.positionCount = 2;
-                lineRenderer.SetPosition(0, anchorTransform.position);
-                lineRenderer.SetPosition(1, transform.position);
-                lineRenderer.enabled = true;
-                distanceJoint2D.enabled = true;
-            }
-            if (Input.GetMouseButtonUp(1))
-            {
-                distanceJoint2D.enabled = false;
-                lineRenderer.enabled = false;  
+                if (Input.GetMouseButtonDown(0))
+                {
+                    animator.SetTrigger("bowAttack");
+                    
+                }
+                if (Input.GetMouseButton(0))
+                {
+                    rb.velocity = new Vector2(0, rb.velocity.y);
+                    animator.SetBool("bowRelease", false);
+                }
+                if (Input.GetMouseButtonUp(0))
+                {
+                    animator.SetBool("bowRelease", true);
+                    StartCoroutine(DelayAttack());
+                }
+                isConnectedAnchor = Physics2D.OverlapCircle(transform.position, jointRange, anchorLayer);
+                if (Input.GetMouseButton(1) && isConnectedAnchor)
+                {
+                    prevVelocity = rb.velocity;
+                    rb.velocity = prevVelocity * new Vector2(2f, 1f);
+                    lineRenderer.positionCount = 2;
+                    lineRenderer.SetPosition(0, anchorTransform.position);
+                    lineRenderer.SetPosition(1, transform.position);
+                    lineRenderer.enabled = true;
+                    distanceJoint2D.enabled = true;
+                }
+                if (Input.GetMouseButtonUp(1))
+                {
+                    distanceJoint2D.enabled = false;
+                    lineRenderer.enabled = false;  
+                }
             }
         }
         
+    }
+
+    public IEnumerator DelayAttack()
+    {
+        Debug.Log("hello there");
+        playerAttack.canAttack = false;
+
+        yield return new WaitForSeconds(playerAttack.attackDelayTime);
         
+        playerAttack.canAttack = true;
     }
 
     private void Jump()

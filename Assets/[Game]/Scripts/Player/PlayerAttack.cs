@@ -6,6 +6,7 @@ public class PlayerAttack : MonoBehaviour
 {
     [Header("Player Attack")]
     public Weapon weapon;
+    Animator animator;
 
     [HideInInspector][SerializeField] Weapon hand;
     [HideInInspector][SerializeField] Weapon sword;
@@ -23,10 +24,7 @@ public class PlayerAttack : MonoBehaviour
 
     private float holdDownStartTime;
     private float holdDownTime;
-    Animator animator;
-
-    public int combo;
-    public bool attacker;
+    public float attackDelayTime;
 
     [Header("Combo")]
     
@@ -39,6 +37,8 @@ public class PlayerAttack : MonoBehaviour
     public string attackAnimation1 = "HandCombat1";
     public string attackAnimation2 = "HandCombat2";
     public string attackAnimation3 = "HandCombat3";
+
+    internal bool canAttack = true;
 
     void Start()
     {
@@ -54,13 +54,14 @@ public class PlayerAttack : MonoBehaviour
         {
             attackPoint = rangedAttackPoint.transform;
         }
-        setWeaponValues();
+        SetWeaponValues();
     }
 
     void Update()
     {  
         WeaponAttack();
         ChangeWeapon();
+        Debug.Log(canAttack);
     }
 
     private void ChangeWeapon()
@@ -81,86 +82,88 @@ public class PlayerAttack : MonoBehaviour
 
     private void WeaponAttack()
     {
-        if (weapon.name == "Sword")
+        if (canAttack)
         {
-            attackPoint = meleeAtackPoint.transform;
-            setWeaponValues();
-            if (Input.GetMouseButton(0) && Input.GetKey(KeyCode.S) && player.isfallAttacking)
+            
+            if (weapon.name == "Sword")
             {
-                attackPoint.localPosition = new Vector3(0, -1, 0);
-                Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, (attackRange * 1.5f), enemyLayers);
-
-                foreach (Collider2D enemy in enemyHit)
+                attackPoint = meleeAtackPoint.transform;
+                SetWeaponValues();
+                if (Input.GetMouseButton(0) && Input.GetKey(KeyCode.S) && player.isfallAttacking)
                 {
-                    enemy.GetComponent<EnemyHealthController>().DamageEnemy(damageAmount);
-                    if (enemy.CompareTag("EnemyWalker"))
+                    attackPoint.localPosition = new Vector3(0, -1, 0);
+                    Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, (attackRange * 1.5f), enemyLayers);
+
+                    foreach (Collider2D enemy in enemyHit)
                     {
-                        player.rb.velocity = new Vector2(player.rb.velocity.x, 20);
+                        enemy.GetComponent<EnemyHealthController>().DamageEnemy(damageAmount);
+                        if (enemy.CompareTag("EnemyWalker"))
+                        {
+                            player.rb.velocity = new Vector2(player.rb.velocity.x, 20);
+                        }
+                    }
+
+                }
+
+                if (Input.GetMouseButtonDown(0) && weapon.weaponName == "Sword")
+                {
+                    attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
+                    FindAndDamageEnemy();
+                }
+
+                if (Input.GetMouseButtonDown(1))
+                {
+                    holdDownStartTime = Time.time;
+                    player.heavyAttackHolded = false;
+                }
+
+                if (Input.GetMouseButtonUp(1))
+                {
+                    holdDownTime = Time.time - holdDownStartTime;
+                    if (holdDownTime > .5)
+                    {
+                        player.heavyAttackHolded = true;
+                        attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
+                        damageAmount *= 2;
+                        FindAndDamageEnemy();
+                        damageAmount /= 2;
+                    }
+                }
+            }
+            else if(weapon.name == "Bow")
+            {
+                attackPoint = rangedAttackPoint.transform;
+                SetWeaponValues();
+                if (Input.GetMouseButtonUp(0))
+                {
+                    if (!player.isFacingRight)
+                    {
+                        Instantiate(weapon.projectile, attackPoint.position, Quaternion.Euler(0, 0, 90));
+                        weapon.moveDirection = new Vector2(transform.localScale.x, 0);
+                    }
+                    else
+                    {
+                        Instantiate(weapon.projectile, attackPoint.position, Quaternion.Euler(0, 0, -90));
+                        weapon.moveDirection = new Vector2(transform.localScale.x, 0);
                     }
                 }
 
             }
-
-            if (Input.GetMouseButtonDown(0) && weapon.weaponName == "Sword")
+            else if (weapon.name == "Hand")
             {
                 attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
-                FindAndDamageEnemy();
+                SetWeaponValues();
 
-            }
-            if (Input.GetMouseButtonDown(1))
-            {
-                holdDownStartTime = Time.time;
-                player.heavyAttackHolded = false;
-            }
-            if (Input.GetMouseButtonUp(1))
-            {
-
-                holdDownTime = Time.time - holdDownStartTime;
-                if (holdDownTime > .5)
+                if (Input.GetMouseButtonDown(0))
                 {
-                    player.heavyAttackHolded = true;
-                    attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
-                    damageAmount *= 2;
-                    FindAndDamageEnemy();
-                    damageAmount /= 2;
 
+                    HandleMeleeAttack();
                 }
-
-            }
-        }
-        else if(weapon.name == "Bow")
-        {
-            attackPoint = rangedAttackPoint.transform;
-            setWeaponValues();
-            if (Input.GetMouseButtonUp(0))
-            {
-                if (!player.isFacingRight)
-                {
-                    Instantiate(weapon.projectile, attackPoint.position, Quaternion.Euler(0, 0, 90));
-                    weapon.moveDirection = new Vector2(transform.localScale.x, 0);
-                }
-                else
-                {
-                    Instantiate(weapon.projectile, attackPoint.position, Quaternion.Euler(0, 0, -90));
-                    weapon.moveDirection = new Vector2(transform.localScale.x, 0);
-                }
-            }
-
-        }
-        else if (weapon.name == "Hand")
-        {
-            attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
-            setWeaponValues();
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                
-                HandleMeleeAttack();
             }
         }
     }
 
-    private void setWeaponValues()
+    private void SetWeaponValues()
     {
         attackRange = weapon.attackRange;
         damageAmount = weapon.damageAmount;
