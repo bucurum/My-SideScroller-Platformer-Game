@@ -8,9 +8,7 @@ public class PlayerAttack : MonoBehaviour
     public Weapon weapon;
     Animator animator;
 
-    [HideInInspector][SerializeField] Weapon hand;
-    [HideInInspector][SerializeField] Weapon sword;
-    [HideInInspector][SerializeField] Weapon bow;
+
     private Transform attackPoint;
     private float attackRange;
     [SerializeField] LayerMask enemyLayers;
@@ -68,15 +66,15 @@ public class PlayerAttack : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            weapon = hand;
+            weapon = ItemDatabase.Instance.GetWeaponOfType(WeaponType.Hand);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            weapon = sword;
+            weapon = ItemDatabase.Instance.GetWeaponOfType(WeaponType.Sword);
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            weapon = bow;
+            weapon = ItemDatabase.Instance.GetWeaponOfType(WeaponType.Bow);
         }
     }
 
@@ -85,7 +83,7 @@ public class PlayerAttack : MonoBehaviour
         if (canAttack)
         {
             
-            if (weapon.name == "Sword")
+            if (weapon.weaponType == WeaponType.Sword)
             {
                 attackPoint = meleeAtackPoint.transform;
                 SetWeaponValues();
@@ -105,7 +103,7 @@ public class PlayerAttack : MonoBehaviour
 
                 }
 
-                if (Input.GetMouseButtonDown(0) && weapon.weaponName == "Sword")
+                if (Input.GetMouseButtonDown(0))
                 {
                     attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
                     FindAndDamageEnemy();
@@ -130,7 +128,7 @@ public class PlayerAttack : MonoBehaviour
                     }
                 }
             }
-            else if(weapon.name == "Bow")
+            else if(weapon.weaponType == WeaponType.Bow)
             {
                 attackPoint = rangedAttackPoint.transform;
                 SetWeaponValues();
@@ -149,7 +147,7 @@ public class PlayerAttack : MonoBehaviour
                 }
 
             }
-            else if (weapon.name == "Hand")
+            else if (weapon.weaponType == WeaponType.Hand)
             {
                 attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
                 SetWeaponValues();

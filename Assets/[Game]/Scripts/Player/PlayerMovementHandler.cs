@@ -91,7 +91,7 @@ public class PlayerMovementHandler : MonoBehaviour
     }
     void Update()
     {
-        weapon = GetComponent<PlayerAttack>().weapon;
+        weapon = playerAttack.weapon;
         Movement();
         animator.SetFloat("yVelocity", rb.velocity.y);
         animator.SetBool("jump", !isGrounded);   
@@ -191,7 +191,7 @@ public class PlayerMovementHandler : MonoBehaviour
         if (playerAttack.canAttack)
         {
             
-            if (weapon.name == "Sword")
+            if (weapon.weaponType == WeaponType.Sword)
             {
                 if (Input.GetMouseButtonDown(0))
                 {
@@ -227,7 +227,7 @@ public class PlayerMovementHandler : MonoBehaviour
     
     
             }
-            else if (weapon.name == "Bow")
+            else if (weapon.weaponType == WeaponType.Bow)
             {
                 if (Input.GetMouseButtonDown(0))
                 {
@@ -267,7 +267,6 @@ public class PlayerMovementHandler : MonoBehaviour
 
     public IEnumerator DelayAttack()
     {
-        Debug.Log("hello there");
         playerAttack.canAttack = false;
 
         yield return new WaitForSeconds(playerAttack.attackDelayTime);
