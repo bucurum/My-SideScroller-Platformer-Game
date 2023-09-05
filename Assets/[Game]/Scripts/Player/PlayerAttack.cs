@@ -9,9 +9,9 @@ public class PlayerAttack : MonoBehaviour
     Animator animator;
 
 
-    private Transform attackPoint;
+    public Transform attackPoint;
     private float attackRange;
-    [SerializeField] LayerMask enemyLayers;
+    
     private int damageAmount = 1;
     private EnemyHealthController enemyHealthController;
     private Transform tempTransform;
@@ -46,11 +46,11 @@ public class PlayerAttack : MonoBehaviour
         player = PlayerHealthController.instance.GetComponent<PlayerMovementHandler>(); 
         if (!weapon.isRanged)
         {
-            attackPoint = meleeAtackPoint.transform;
+            weapon.attackPoint = meleeAtackPoint.transform;
         }  
         else
         {
-            attackPoint = rangedAttackPoint.transform;
+            weapon.attackPoint = rangedAttackPoint.transform;
         }
         SetWeaponValues();
     }
@@ -85,28 +85,29 @@ public class PlayerAttack : MonoBehaviour
             
             if (weapon.weaponType == WeaponType.Sword)
             {
-                attackPoint = meleeAtackPoint.transform;
+                weapon.attackPoint = meleeAtackPoint.transform;
                 SetWeaponValues();
-                if (Input.GetMouseButton(0) && Input.GetKey(KeyCode.S) && player.isfallAttacking)
-                {
-                    attackPoint.localPosition = new Vector3(0, -1, 0);
-                    Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, (attackRange * 1.5f), enemyLayers);
+                //weapon.Attack(weapon.attackPoint);
+                // if (Input.GetMouseButton(0) && Input.GetKey(KeyCode.S) && player.isfallAttacking)
+                // {
+                //     weapon.attackPoint.localPosition = new Vector3(0, -1, 0);
+                //     Collider2D[] enemyHit = Physics2D.OverlapCircleAll(weapon.attackPoint.position, (attackRange * 1.5f), enemyLayers);
 
-                    foreach (Collider2D enemy in enemyHit)
-                    {
-                        enemy.GetComponent<EnemyHealthController>().DamageEnemy(damageAmount);
-                        if (enemy.CompareTag("EnemyWalker"))
-                        {
-                            player.rb.velocity = new Vector2(player.rb.velocity.x, 20);
-                        }
-                    }
+                //     foreach (Collider2D enemy in enemyHit)
+                //     {
+                //         enemy.GetComponent<EnemyHealthController>().DamageEnemy(damageAmount);
+                //         if (enemy.CompareTag("EnemyWalker"))
+                //         {
+                //             player.rb.velocity = new Vector2(player.rb.velocity.x, 20);
+                //         }
+                //     }
 
-                }
+                // }
 
                 if (Input.GetMouseButtonDown(0))
                 {
-                    attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
-                    FindAndDamageEnemy();
+                    weapon.attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
+                    weapon.Attack();
                 }
 
                 if (Input.GetMouseButtonDown(1))
@@ -121,27 +122,27 @@ public class PlayerAttack : MonoBehaviour
                     if (holdDownTime > .5)
                     {
                         player.heavyAttackHolded = true;
-                        attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
+                        // weapon.attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
                         damageAmount *= 2;
-                        FindAndDamageEnemy();
+                        weapon.Attack();
                         damageAmount /= 2;
                     }
                 }
             }
             else if(weapon.weaponType == WeaponType.Bow)
             {
-                attackPoint = rangedAttackPoint.transform;
+                weapon.attackPoint = rangedAttackPoint.transform;
                 SetWeaponValues();
                 if (Input.GetMouseButtonUp(0))
                 {
                     if (!player.isFacingRight)
                     {
-                        Instantiate(weapon.projectile, attackPoint.position, Quaternion.Euler(0, 0, 90));
+                        Instantiate(weapon.projectile, weapon.attackPoint.position, Quaternion.Euler(0, 0, 90));
                         weapon.moveDirection = new Vector2(transform.localScale.x, 0);
                     }
                     else
                     {
-                        Instantiate(weapon.projectile, attackPoint.position, Quaternion.Euler(0, 0, -90));
+                        Instantiate(weapon.projectile, weapon.attackPoint.position, Quaternion.Euler(0, 0, -90));
                         weapon.moveDirection = new Vector2(transform.localScale.x, 0);
                     }
                 }
@@ -149,7 +150,7 @@ public class PlayerAttack : MonoBehaviour
             }
             else if (weapon.weaponType == WeaponType.Hand)
             {
-                attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
+                weapon.attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
                 SetWeaponValues();
 
                 if (Input.GetMouseButtonDown(0))
@@ -172,19 +173,19 @@ public class PlayerAttack : MonoBehaviour
         
     }
 
-    private void FindAndDamageEnemy()
-    {
-        Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+    // private void FindAndDamageEnemy()
+    // {
+    //     Collider2D[] enemyHit = Physics2D.OverlapCircleAll(weapon.attackPoint.position, attackRange, enemyLayers);
 
-        foreach (Collider2D enemy in enemyHit)
-        {
-            enemy.GetComponent<EnemyHealthController>().DamageEnemy(damageAmount);
-        }
-    }
+    //     foreach (Collider2D enemy in enemyHit)
+    //     {
+    //         enemy.GetComponent<EnemyHealthController>().DamageEnemy(damageAmount);
+    //     }
+    // }
 
     void OnDrawGizmosSelected()
     {
-        if (attackPoint == null)
+        if (weapon.attackPoint == null)
         {
             return;
         }
@@ -215,15 +216,15 @@ public class PlayerAttack : MonoBehaviour
         {
             case 1:
                 PlayAttackAnimation(attackAnimation1);
-                FindAndDamageEnemy();
+                weapon.Attack();
                 break;
             case 2:
                 PlayAttackAnimation(attackAnimation2);
-                FindAndDamageEnemy();
+                weapon.Attack();
                 break;
             case 3:
                 PlayAttackAnimation(attackAnimation3);
-                FindAndDamageEnemy();
+                weapon.Attack();
                 break;
         }
 

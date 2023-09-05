@@ -8,21 +8,37 @@ public class Weapon : ScriptableObject
     public GameObject projectile;
     public string weaponName;
     public int damageAmount;
-    public Transform attackPoint;
     public float attackRange;
-    public bool isRanged;
+    public bool isRanged = false;
     public WeaponType weaponType; // TODO Add weaponType to declarations
     public Vector2 moveDirection;
+     public Transform attackPoint;
+    
+    private PlayerAttack playerAttack;
+    [SerializeField] LayerMask enemyLayers;
 
     public AnimatorOverrideController animatorOverride = null;
 
-/*
-    public virtual void Attack(PlayerAttack player){
+    private void Awake() {
+        playerAttack = PlayerHealthController.instance.GetComponent<PlayerAttack>();
+
+    }
+    
+    public virtual void Attack(){ //PlayerAttack player
         // 1 Get player stats
         // 2 Do physics collider calculations
         // TODO Add attack calculations, and deal damage
+
+        
+        
+        Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+
+        foreach (Collider2D enemy in enemyHit)
+        {
+            enemy.GetComponent<EnemyHealthController>().DamageEnemy(damageAmount);
+        }
     }
-*/
+
     //TODO: if attackPoint is null use the player`s attack point
 }
 

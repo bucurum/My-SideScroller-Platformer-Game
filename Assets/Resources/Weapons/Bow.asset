@@ -15,12 +15,12 @@ MonoBehaviour:
   projectile: {fileID: 5005369640774961465, guid: 83baf6d24ea88b24ab4a00ec2131ee73, type: 3}
   weaponName: Bow
   damageAmount: 15
-  attackPoint: {fileID: 4650880920362593660, guid: 9b4670d7cdcffdf47b208b8898a16dc6, type: 3}
   attackRange: 20
   isRanged: 1
   weaponType: 0
-  moveDirection: {x: -1, y: 0}
+  moveDirection: {x: 1, y: 0}
+  attackPoint: {fileID: 0}
   enemyLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   animatorOverride: {fileID: 22100000, guid: 0a4ce2f4e97c7df47bb9bb7a58ef198f, type: 2}
