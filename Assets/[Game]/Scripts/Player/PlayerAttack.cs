@@ -13,15 +13,13 @@ public class PlayerAttack : MonoBehaviour
     private float attackRange;
     
     private int damageAmount = 1;
-    private EnemyHealthController enemyHealthController;
-    private Transform tempTransform;
     private PlayerMovementHandler player;
 
     [HideInInspector] public GameObject meleeAtackPoint;
     [HideInInspector] public GameObject rangedAttackPoint;
 
-    private float holdDownStartTime;
-    private float holdDownTime;
+    [HideInInspector] public float holdDownStartTime;
+    [HideInInspector] public float holdDownTime;
     public float attackDelayTime;
 
     [Header("Combo")]
@@ -41,17 +39,18 @@ public class PlayerAttack : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+        player = GetComponent<PlayerMovementHandler>();
         // currentWeapon = weapon;
         
-        player = PlayerHealthController.instance.GetComponent<PlayerMovementHandler>(); 
-        if (!weapon.isRanged)
-        {
-            weapon.attackPoint = meleeAtackPoint.transform;
-        }  
-        else
-        {
-            weapon.attackPoint = rangedAttackPoint.transform;
-        }
+        // player = PlayerHealthController.instance.GetComponent<PlayerMovementHandler>(); 
+        // if (!weapon.isRanged)
+        // {
+        //     weapon.attackPoint = meleeAtackPoint.transform;
+        // }  
+        // else
+        // {
+        //     weapon.attackPoint = rangedAttackPoint.transform;
+        // }
         SetWeaponValues();
     }
 
@@ -59,7 +58,6 @@ public class PlayerAttack : MonoBehaviour
     {  
         WeaponAttack();
         ChangeWeapon();
-        Debug.Log(canAttack);
     }
 
     private void ChangeWeapon()
@@ -76,33 +74,24 @@ public class PlayerAttack : MonoBehaviour
         {
             weapon = ItemDatabase.Instance.GetWeaponOfType(WeaponType.Bow);
         }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            weapon = ItemDatabase.Instance.GetWeaponOfType(WeaponType.Sword2);
+        }
     }
 
     private void WeaponAttack()
     {
         if (canAttack)
-        {
-            
+        { 
             if (weapon.weaponType == WeaponType.Sword)
             {
-                weapon.attackPoint = meleeAtackPoint.transform;
                 SetWeaponValues();
-                //weapon.Attack(weapon.attackPoint);
-                // if (Input.GetMouseButton(0) && Input.GetKey(KeyCode.S) && player.isfallAttacking)
-                // {
-                //     weapon.attackPoint.localPosition = new Vector3(0, -1, 0);
-                //     Collider2D[] enemyHit = Physics2D.OverlapCircleAll(weapon.attackPoint.position, (attackRange * 1.5f), enemyLayers);
-
-                //     foreach (Collider2D enemy in enemyHit)
-                //     {
-                //         enemy.GetComponent<EnemyHealthController>().DamageEnemy(damageAmount);
-                //         if (enemy.CompareTag("EnemyWalker"))
-                //         {
-                //             player.rb.velocity = new Vector2(player.rb.velocity.x, 20);
-                //         }
-                //     }
-
-                // }
+                if (Input.GetMouseButton(0) && Input.GetKey(KeyCode.S) && player.isfallAttacking)
+                {
+                    weapon.attackPoint.localPosition = new Vector3(0, -1, 0);
+                    weapon.Attack();
+                }
 
                 if (Input.GetMouseButtonDown(0))
                 {
@@ -123,28 +112,22 @@ public class PlayerAttack : MonoBehaviour
                     {
                         player.heavyAttackHolded = true;
                         // weapon.attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
-                        damageAmount *= 2;
-                        weapon.Attack();
-                        damageAmount /= 2;
+                        weapon.HeavyAttack();
                     }
                 }
             }
             else if(weapon.weaponType == WeaponType.Bow)
             {
-                weapon.attackPoint = rangedAttackPoint.transform;
                 SetWeaponValues();
+                if (Input.GetMouseButtonDown(0))
+                {
+                    holdDownStartTime = Time.time;
+                }
                 if (Input.GetMouseButtonUp(0))
                 {
-                    if (!player.isFacingRight)
-                    {
-                        Instantiate(weapon.projectile, weapon.attackPoint.position, Quaternion.Euler(0, 0, 90));
-                        weapon.moveDirection = new Vector2(transform.localScale.x, 0);
-                    }
-                    else
-                    {
-                        Instantiate(weapon.projectile, weapon.attackPoint.position, Quaternion.Euler(0, 0, -90));
-                        weapon.moveDirection = new Vector2(transform.localScale.x, 0);
-                    }
+                    holdDownTime = Time.time - holdDownStartTime;
+                    Instantiate(weapon.projectile, weapon.attackPoint.position, Quaternion.identity);
+                    weapon.moveDirection = new Vector2(transform.localScale.x, 0);   
                 }
 
             }
@@ -159,11 +142,30 @@ public class PlayerAttack : MonoBehaviour
                     HandleMeleeAttack();
                 }
             }
+            else if(weapon.weaponType == WeaponType.Sword2)
+            {
+                
+                SetWeaponValues();
+                if (Input.GetMouseButtonDown(0))
+                {
+
+                    HandleMeleeAttack();
+                }
+            }
+
         }
     }
 
     private void SetWeaponValues()
     {
+        if (weapon.isRanged)
+        {
+            weapon.attackPoint = rangedAttackPoint.transform;
+        }
+        else
+        {
+            weapon.attackPoint = meleeAtackPoint.transform;
+        }
         attackRange = weapon.attackRange;
         damageAmount = weapon.damageAmount;
         if (weapon.animatorOverride != null)

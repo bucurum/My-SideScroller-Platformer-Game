@@ -191,7 +191,7 @@ public class PlayerMovementHandler : MonoBehaviour
         if (playerAttack.canAttack)
         {
             
-            if (weapon.weaponType == WeaponType.Sword)
+            if (weapon.weaponType == WeaponType.Sword || weapon.weaponType == WeaponType.Sword2) //trying new weapon animation you can delete after || section
             {
                 if (Input.GetMouseButtonDown(0))
                 {
@@ -320,15 +320,15 @@ public class PlayerMovementHandler : MonoBehaviour
         {
             rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * movementSpeed, rb.velocity.y);
             animator.SetFloat("speed", Mathf.Abs(rb.velocity.x));
-            if (rb.velocity.x < 0)
-            {
-                transform.localScale = new Vector3(-1f, 1f, 1f);
-                isFacingRight = false;
-            }
-            else if (rb.velocity.x > 0)
+            if (rb.velocity.x > 0)
             {
                 transform.localScale = new Vector3(1f, 1f, 1f);
                 isFacingRight = true;
+            }
+            else if (rb.velocity.x < 0)
+            {
+                transform.localScale = new Vector3(-1f, 1f, 1f);
+                isFacingRight = false;
             }
         }
     }

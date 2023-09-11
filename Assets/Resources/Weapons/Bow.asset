@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 5005369640774961465, guid: 83baf6d24ea88b24ab4a00ec2131ee73, type: 3}
   weaponName: Bow
-  damageAmount: 15
+  damageAmount: 7
+  heavyDamageAmount: 14
   attackRange: 20
   isRanged: 1
   weaponType: 0
