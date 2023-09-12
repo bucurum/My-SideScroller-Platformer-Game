@@ -26,14 +26,11 @@ public class Arrow : MonoBehaviour
         {
             transform.rotation = Quaternion.Euler(0, 0, 90);
         }
-        Debug.Log(playerAttack.holdDownTime);
         
     }
 
     void Update()
-    {  
-        
-        
+    {
         rb.velocity = moveDirection * arrowSpeed; 
     }
     void OnTriggerEnter2D(Collider2D other)
@@ -43,18 +40,16 @@ public class Arrow : MonoBehaviour
             if (playerAttack.holdDownTime < .5)
             {
                 other.GetComponent<EnemyHealthController>().DamageEnemy(weapon.damageAmount);
-                Debug.Log("normal damage");
             }
             else
             {
                 other.GetComponent<EnemyHealthController>().DamageEnemy(weapon.heavyDamageAmount);
-                Debug.Log("heavy");
             }
            
         }
-        Destroy(gameObject);
-        
+        Destroy(gameObject); 
     }
+    
     void OnBecameInvisible()
     {
         Destroy(gameObject);
