@@ -45,11 +45,11 @@ public class PlayerAttack : MonoBehaviour
         // player = PlayerHealthController.instance.GetComponent<PlayerMovementHandler>(); 
         // if (!weapon.isRanged)
         // {
-        //     weapon.attackPoint = meleeAtackPoint.transform;
+        //     attackPoint = meleeAtackPoint.transform;
         // }  
         // else
         // {
-        //     weapon.attackPoint = rangedAttackPoint.transform;
+        //     attackPoint = rangedAttackPoint.transform;
         // }
         SetWeaponValues();
     }
@@ -89,14 +89,14 @@ public class PlayerAttack : MonoBehaviour
                 SetWeaponValues();
                 if (Input.GetMouseButton(0) && Input.GetKey(KeyCode.S) && player.isfallAttacking)
                 {
-                    weapon.attackPoint.localPosition = new Vector3(0, -1, 0);
-                    weapon.Attack();
+                    attackPoint.localPosition = new Vector3(0, -1, 0);
+                    weapon.Attack(this);
                 }
 
                 if (Input.GetMouseButtonDown(0))
                 {
-                    weapon.attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
-                    weapon.Attack();
+                    attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
+                    weapon.Attack(this);
                 }
 
                 if (Input.GetMouseButtonDown(1))
@@ -111,8 +111,8 @@ public class PlayerAttack : MonoBehaviour
                     if (holdDownTime > .5)
                     {
                         player.heavyAttackHolded = true;
-                        // weapon.attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
-                        weapon.HeavyAttack();
+                        // attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
+                        weapon.HeavyAttack(this);
                     }
                 }
             }
@@ -126,14 +126,14 @@ public class PlayerAttack : MonoBehaviour
                 if (Input.GetMouseButtonUp(0))
                 {
                     holdDownTime = Time.time - holdDownStartTime;
-                    Instantiate(weapon.projectile, weapon.attackPoint.position, Quaternion.identity);
+                    Instantiate(weapon.projectile, attackPoint.position, Quaternion.identity);
                     weapon.moveDirection = new Vector2(transform.localScale.x, 0);   
                 }
 
             }
             else if (weapon.weaponType == WeaponType.Hand)
             {
-                weapon.attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
+                attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
                 SetWeaponValues();
 
                 if (Input.GetMouseButtonDown(0))
@@ -156,15 +156,25 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+    public Transform GetAttackPoint()
+    {
+        if (attackPoint == null)
+        {
+            Debug.Log("Attack Point is null!!!");
+            return transform;
+        }
+        return attackPoint;
+    }
+
     private void SetWeaponValues()
     {
         if (weapon.isRanged)
         {
-            weapon.attackPoint = rangedAttackPoint.transform;
+            attackPoint = rangedAttackPoint.transform;
         }
         else
         {
-            weapon.attackPoint = meleeAtackPoint.transform;
+            attackPoint = meleeAtackPoint.transform;
         }
         attackRange = weapon.attackRange;
         damageAmount = weapon.damageAmount;
@@ -177,7 +187,7 @@ public class PlayerAttack : MonoBehaviour
 
     // private void FindAndDamageEnemy()
     // {
-    //     Collider2D[] enemyHit = Physics2D.OverlapCircleAll(weapon.attackPoint.position, attackRange, enemyLayers);
+    //     Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
 
     //     foreach (Collider2D enemy in enemyHit)
     //     {
@@ -187,7 +197,7 @@ public class PlayerAttack : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
-        if (weapon.attackPoint == null)
+        if (attackPoint == null)
         {
             return;
         }
@@ -218,15 +228,15 @@ public class PlayerAttack : MonoBehaviour
         {
             case 1:
                 PlayAttackAnimation(attackAnimation1);
-                weapon.Attack();
+                weapon.Attack(this);
                 break;
             case 2:
                 PlayAttackAnimation(attackAnimation2);
-                weapon.Attack();
+                weapon.Attack(this);
                 break;
             case 3:
                 PlayAttackAnimation(attackAnimation3);
-                weapon.Attack();
+                weapon.Attack(this);
                 break;
         }
 

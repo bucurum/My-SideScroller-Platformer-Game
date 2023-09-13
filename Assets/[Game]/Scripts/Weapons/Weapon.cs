@@ -13,18 +13,18 @@ public class Weapon : ScriptableObject
     public bool isRanged = false;
     public WeaponType weaponType; // TODO Add weaponType to declarations
     public Vector2 moveDirection;
-    public Transform attackPoint;
     
     [SerializeField] LayerMask enemyLayers;
 
     public AnimatorOverrideController animatorOverride = null;
     
-    public virtual void Attack(){ //PlayerAttack player
+    public virtual void Attack(PlayerAttack player){ //
         // 1 Get player stats
         // 2 Do physics collider calculations
         // TODO Add attack calculations, and deal damage
+
         
-        Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        Collider2D[] enemyHit = Physics2D.OverlapCircleAll(player.GetAttackPoint().position, attackRange, enemyLayers);
 
         foreach (Collider2D enemy in enemyHit)
         {
@@ -32,10 +32,10 @@ public class Weapon : ScriptableObject
         }
     }
 
-    public virtual void HeavyAttack()
+    public virtual void HeavyAttack(PlayerAttack player)
     {
 
-        Collider2D[] enemyHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        Collider2D[] enemyHit = Physics2D.OverlapCircleAll(player.GetAttackPoint().position, attackRange, enemyLayers);
 
         foreach (Collider2D enemy in enemyHit)
         {
