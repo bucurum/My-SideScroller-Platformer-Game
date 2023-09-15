@@ -858,7 +858,7 @@ TextureImporter:
       213: -3397867106260580245
     second: Tree-Assets_284
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -879,6 +879,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -917,6 +918,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -944,6 +946,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
+    maxTextureSize: 512
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
     maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
@@ -6952,6 +6966,292 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Tree-Assets_0: -4455372978274673126
+      Tree-Assets_1: 3373896279046007481
+      Tree-Assets_10: 9089305262182165887
+      Tree-Assets_100: 7529345238885884037
+      Tree-Assets_101: 2754224421334354023
+      Tree-Assets_102: -7534596985999257045
+      Tree-Assets_103: 6131488987231764928
+      Tree-Assets_104: 1484661886487984229
+      Tree-Assets_105: 5658395047034657513
+      Tree-Assets_106: 8775889250376348316
+      Tree-Assets_107: 5715639280276695942
+      Tree-Assets_108: -118707235984751348
+      Tree-Assets_109: -1171867410112744936
+      Tree-Assets_11: -5833253491220293300
+      Tree-Assets_110: -8869555323573580834
+      Tree-Assets_111: -7415254186360793241
+      Tree-Assets_112: 422639575504781231
+      Tree-Assets_113: 6751037064183973752
+      Tree-Assets_114: 3559346043764391189
+      Tree-Assets_115: -2198422226481675999
+      Tree-Assets_116: 8172138537169936721
+      Tree-Assets_117: 3817895863737015339
+      Tree-Assets_118: -6137424395010886761
+      Tree-Assets_119: 8631722127979344794
+      Tree-Assets_12: -6876125672178683268
+      Tree-Assets_120: 4411583860156460875
+      Tree-Assets_121: -4411025472083116559
+      Tree-Assets_122: -6732675075755119284
+      Tree-Assets_123: 8671551891171405294
+      Tree-Assets_124: 8676871498295590508
+      Tree-Assets_125: -4310629953492230668
+      Tree-Assets_126: -3185826271997992655
+      Tree-Assets_127: 5987170718415740292
+      Tree-Assets_128: 100284776655936533
+      Tree-Assets_129: -3892022169450049812
+      Tree-Assets_13: -7621340884766093543
+      Tree-Assets_130: 7990120581791596773
+      Tree-Assets_131: 4048299876143690723
+      Tree-Assets_132: -4133975886232008260
+      Tree-Assets_133: 7933302210559266219
+      Tree-Assets_134: -4718259430133063885
+      Tree-Assets_135: -5580262537325709171
+      Tree-Assets_136: -4616323291890571200
+      Tree-Assets_137: -1657679229836073370
+      Tree-Assets_138: -8619563236498612341
+      Tree-Assets_139: -865098721000030172
+      Tree-Assets_14: -6540103084740225248
+      Tree-Assets_140: -7484054102735796233
+      Tree-Assets_141: -5984061735737179322
+      Tree-Assets_142: -8650540966538584480
+      Tree-Assets_143: 6077911318626054840
+      Tree-Assets_144: 4326763380805409583
+      Tree-Assets_145: 5528662446687719323
+      Tree-Assets_146: -8268754606149347428
+      Tree-Assets_147: 6918520854623755337
+      Tree-Assets_148: -3750370400077676836
+      Tree-Assets_149: -3944299400942422311
+      Tree-Assets_15: -2193681318028300249
+      Tree-Assets_150: 4032516196417347361
+      Tree-Assets_151: -7652650965122790569
+      Tree-Assets_152: -1682067185253693251
+      Tree-Assets_153: 7715857370382308668
+      Tree-Assets_154: 497445300004160222
+      Tree-Assets_155: -7034674746402419925
+      Tree-Assets_156: 8037318383883064163
+      Tree-Assets_157: 6927464752423515727
+      Tree-Assets_158: -3323133114017813334
+      Tree-Assets_159: -6183347161677967170
+      Tree-Assets_16: 492471657758431313
+      Tree-Assets_160: 6177531830667333125
+      Tree-Assets_161: -5617692129620715273
+      Tree-Assets_162: 2701882304889603796
+      Tree-Assets_163: -7349749589869359209
+      Tree-Assets_164: -4088203225397047792
+      Tree-Assets_165: 1980424903103110365
+      Tree-Assets_166: 7657273129461905393
+      Tree-Assets_167: -291709312467641179
+      Tree-Assets_168: 8310444369482582143
+      Tree-Assets_169: -7040309357283607379
+      Tree-Assets_17: 3737111927203290275
+      Tree-Assets_170: -760149323447920800
+      Tree-Assets_171: 7264232301101535661
+      Tree-Assets_172: 4384292878355153625
+      Tree-Assets_173: -7562988367639260888
+      Tree-Assets_174: 6420128666728315867
+      Tree-Assets_175: -1776230097691381683
+      Tree-Assets_176: 5554159756057018859
+      Tree-Assets_177: -3536573837823015584
+      Tree-Assets_178: -7286281956795590319
+      Tree-Assets_179: 7868668798208939668
+      Tree-Assets_18: -5324382218315814651
+      Tree-Assets_180: -8600186763111561748
+      Tree-Assets_181: -4956552164158385467
+      Tree-Assets_182: -5146776938855899006
+      Tree-Assets_183: 2404227566768828169
+      Tree-Assets_184: -8917419810628042360
+      Tree-Assets_185: 3514012541755698052
+      Tree-Assets_186: -1503739712223135448
+      Tree-Assets_187: 5569360047393031483
+      Tree-Assets_188: 117382045859454216
+      Tree-Assets_189: 8745287073650076451
+      Tree-Assets_19: -6489347087733027291
+      Tree-Assets_190: -8531083358192942024
+      Tree-Assets_191: 3571286727794070263
+      Tree-Assets_192: 5046514919095079783
+      Tree-Assets_193: 2409115228793540943
+      Tree-Assets_194: 2185722173813827344
+      Tree-Assets_195: -9164968921859557365
+      Tree-Assets_196: 5678412785345012496
+      Tree-Assets_197: 1512900671709265441
+      Tree-Assets_198: 5950891559642821206
+      Tree-Assets_199: -7726599635804665986
+      Tree-Assets_2: 8200937935140575401
+      Tree-Assets_20: -4454162454437235406
+      Tree-Assets_200: -4701455515382757399
+      Tree-Assets_201: -8062040040144849056
+      Tree-Assets_202: 2001557897026919371
+      Tree-Assets_203: -4627906830204300866
+      Tree-Assets_204: -138786623357327395
+      Tree-Assets_205: 1131741311156820720
+      Tree-Assets_206: 2168159955941642266
+      Tree-Assets_207: 3800953060009714229
+      Tree-Assets_208: -4242911900900755105
+      Tree-Assets_209: 4763290493657950480
+      Tree-Assets_21: -3314426946364825620
+      Tree-Assets_210: 3848942813890116991
+      Tree-Assets_211: 7875136089093558806
+      Tree-Assets_212: -1445376719848006093
+      Tree-Assets_213: -3454619791850073050
+      Tree-Assets_214: 4677926924678856066
+      Tree-Assets_215: 7313423913181439865
+      Tree-Assets_216: 8650762644906024783
+      Tree-Assets_217: -3168014258568287523
+      Tree-Assets_218: 7770370314821882891
+      Tree-Assets_219: -4850444062417502247
+      Tree-Assets_22: -2933201090782605362
+      Tree-Assets_220: -5964668198796729170
+      Tree-Assets_221: 8188714634236284362
+      Tree-Assets_222: 378044916467559268
+      Tree-Assets_223: 2970687288461299704
+      Tree-Assets_224: 4348236243576496873
+      Tree-Assets_225: 2676651753906767035
+      Tree-Assets_226: -2666180295591203374
+      Tree-Assets_227: -3001251500128817884
+      Tree-Assets_228: 4748758404159266288
+      Tree-Assets_229: 8943912718262780058
+      Tree-Assets_23: 7221066063730765331
+      Tree-Assets_230: -4315050796699616830
+      Tree-Assets_231: -3137533613936938813
+      Tree-Assets_232: 7071837231438545592
+      Tree-Assets_233: 2853784194095441165
+      Tree-Assets_234: -3390400372365089626
+      Tree-Assets_235: 9132580999327561649
+      Tree-Assets_236: -6326538397823283953
+      Tree-Assets_237: 6056461013104818375
+      Tree-Assets_238: -6782893927420571147
+      Tree-Assets_239: -2334748309923333549
+      Tree-Assets_24: -6262681953305765212
+      Tree-Assets_240: -5788270923293574127
+      Tree-Assets_241: -8594262417032485818
+      Tree-Assets_242: 7428265317429012714
+      Tree-Assets_243: -905310204267209654
+      Tree-Assets_244: 891465346075013954
+      Tree-Assets_245: 1292359072792053586
+      Tree-Assets_246: 1390645239132427845
+      Tree-Assets_247: -3938910232609275996
+      Tree-Assets_248: -4049102225422004305
+      Tree-Assets_249: 4381755990642176292
+      Tree-Assets_25: -2588077812185910064
+      Tree-Assets_250: -7965586171405601025
+      Tree-Assets_251: 8143031683017315043
+      Tree-Assets_252: 2465696865667879433
+      Tree-Assets_253: 6067638997646103487
+      Tree-Assets_254: -9064725129818922409
+      Tree-Assets_255: 7174061281290062845
+      Tree-Assets_256: -5249600749967760077
+      Tree-Assets_257: -6457783479144094220
+      Tree-Assets_258: -2867045963060588280
+      Tree-Assets_259: -2256358416088989538
+      Tree-Assets_26: 7132571399785749693
+      Tree-Assets_260: -4732319061435777857
+      Tree-Assets_261: -7123701203295458876
+      Tree-Assets_262: 169843937314850245
+      Tree-Assets_263: 5072932320202636521
+      Tree-Assets_264: 2643868086806236801
+      Tree-Assets_265: 7440207383446737302
+      Tree-Assets_266: -6409084756326036181
+      Tree-Assets_267: -8477456337258253489
+      Tree-Assets_268: -3120320866821745138
+      Tree-Assets_269: 4624436478887032229
+      Tree-Assets_27: 3993795857276552204
+      Tree-Assets_270: -8986729771174569769
+      Tree-Assets_271: 7451858563785838344
+      Tree-Assets_272: -670036415869496219
+      Tree-Assets_273: -4887217923628410618
+      Tree-Assets_274: -2682086790882281205
+      Tree-Assets_275: 5948836243389274816
+      Tree-Assets_276: 6326472727895727192
+      Tree-Assets_277: -3066405074370829878
+      Tree-Assets_278: 3379482310300275842
+      Tree-Assets_279: 3702971969989887136
+      Tree-Assets_28: -1749204352346856393
+      Tree-Assets_280: 6963802188392538502
+      Tree-Assets_281: 7196402411107950345
+      Tree-Assets_282: -6489583274756051509
+      Tree-Assets_283: -8743378471973343078
+      Tree-Assets_284: -3397867106260580245
+      Tree-Assets_29: -5956475546589990287
+      Tree-Assets_3: -2167415779893708840
+      Tree-Assets_30: -483827837381614002
+      Tree-Assets_31: -6378905033511552317
+      Tree-Assets_32: -4944258269447848578
+      Tree-Assets_33: -7077378037181236326
+      Tree-Assets_34: 9179750429866905379
+      Tree-Assets_35: -2259967384403259184
+      Tree-Assets_36: -2380817133553143135
+      Tree-Assets_37: 7299512110406932198
+      Tree-Assets_38: -6165374083503568955
+      Tree-Assets_39: -7625186754395648595
+      Tree-Assets_4: -1206494012597054622
+      Tree-Assets_40: -716771178141653364
+      Tree-Assets_41: 1378196669889047222
+      Tree-Assets_42: -2727783892741347529
+      Tree-Assets_43: 1787253616990630993
+      Tree-Assets_44: 6353394732346153428
+      Tree-Assets_45: 781343874201240667
+      Tree-Assets_46: 2840843088754828372
+      Tree-Assets_47: 4126651796793023133
+      Tree-Assets_48: 7625572240433631407
+      Tree-Assets_49: -3966944629326611607
+      Tree-Assets_5: -1663077402021225956
+      Tree-Assets_50: -6168393838071651776
+      Tree-Assets_51: 1389765385167089665
+      Tree-Assets_52: -3812651163963418346
+      Tree-Assets_53: -6461588118891163093
+      Tree-Assets_54: 3969144250530993028
+      Tree-Assets_55: -2832116240993234656
+      Tree-Assets_56: 7301877141507130448
+      Tree-Assets_57: -4232840059663921450
+      Tree-Assets_58: 2464599753697047340
+      Tree-Assets_59: 6960743078952052196
+      Tree-Assets_6: -8055617382826884526
+      Tree-Assets_60: 2405840848588019121
+      Tree-Assets_61: 5343096052413112720
+      Tree-Assets_62: 1431239067251406609
+      Tree-Assets_63: 5913498324470362308
+      Tree-Assets_64: -9067426508356316179
+      Tree-Assets_65: -6237631905656564070
+      Tree-Assets_66: -2369496275958830789
+      Tree-Assets_67: -6616403923789365690
+      Tree-Assets_68: 5669706928463174166
+      Tree-Assets_69: 7206156455263883782
+      Tree-Assets_7: -5134847453017764913
+      Tree-Assets_70: -8840854456276141629
+      Tree-Assets_71: 8663429430139715290
+      Tree-Assets_72: -3104006232744925079
+      Tree-Assets_73: -4157732496424852758
+      Tree-Assets_74: -7543317968685425980
+      Tree-Assets_75: -1965304692478301961
+      Tree-Assets_76: -4465520415639190109
+      Tree-Assets_77: -5232282510159620751
+      Tree-Assets_78: -2952615312626389056
+      Tree-Assets_79: 2703703342803406221
+      Tree-Assets_8: -7491648610584713467
+      Tree-Assets_80: 1169429267319417439
+      Tree-Assets_81: 3227204517474058039
+      Tree-Assets_82: -8144129637634431621
+      Tree-Assets_83: -143483788159000640
+      Tree-Assets_84: -922053009627582793
+      Tree-Assets_85: 7297713789901952256
+      Tree-Assets_86: 4265373094867021084
+      Tree-Assets_87: 2164020287472942766
+      Tree-Assets_88: -3614499109131172203
+      Tree-Assets_89: -7942369151937886306
+      Tree-Assets_9: 5396780394076808599
+      Tree-Assets_90: 1845415461295475411
+      Tree-Assets_91: 7989555812934442826
+      Tree-Assets_92: -8706606255212474069
+      Tree-Assets_93: 6082288134844006685
+      Tree-Assets_94: 4781417436806659271
+      Tree-Assets_95: -8866104270458149854
+      Tree-Assets_96: 9061412502726527114
+      Tree-Assets_97: -8969845600860763430
+      Tree-Assets_98: 4670583886455441400
+      Tree-Assets_99: -6418427396029353133
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
