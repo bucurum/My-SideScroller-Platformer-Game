@@ -10,6 +10,7 @@ public class EnemyMover : MonoBehaviour
     [SerializeField] float jumpForce;
     public Rigidbody2D rb;
     public Animator animator;
+    public bool hit;
 
     void Start()
     {
@@ -21,35 +22,48 @@ public class EnemyMover : MonoBehaviour
 
     void Update()
     {
-        if (Mathf.Abs(transform.position.x - patrolPoints[currentPoint].position.x) > .2f)
+        if (!hit)
         {
-            if (transform.position.x < patrolPoints[currentPoint].position.x)
+            if (Mathf.Abs(transform.position.x - patrolPoints[currentPoint].position.x) > .2f)
             {
-                rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
-                transform.localScale = new Vector3(-1f, 1f, 1f);
+                if (transform.position.x < patrolPoints[currentPoint].position.x)
+                {
+                    rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
+                    transform.localScale = new Vector3(-1f, 1f, 1f);
+                }
+                else
+                {
+                    rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
+                    transform.localScale = Vector3.one;
+                }
+
+                if (transform.position.y < (patrolPoints[currentPoint].position.y - .5f) && rb.velocity.y < .1f)
+                {
+                    rb.velocity = new Vector2(0f, jumpForce);
+                }
             }
             else
             {
-                rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
-                transform.localScale = Vector3.one;
+                rb.velocity = new Vector2(0f, rb.velocity.y);
+                currentPoint++;
+                if (currentPoint >= patrolPoints.Length)
+                {
+                    currentPoint = 0;
+                }
             }
-
-            if (transform.position.y < (patrolPoints[currentPoint].position.y - .5f) && rb.velocity.y < .1f)
-            {
-                rb.velocity = new Vector2(0f, jumpForce);
-            }
+            animator.SetFloat("speed", Mathf.Abs(rb.velocity.x));      
         }
         else
         {
-            rb.velocity = new Vector2(0f, rb.velocity.y);
-            currentPoint++;
-            if (currentPoint >= patrolPoints.Length)
-            {
-                currentPoint = 0;
-            }
+            StartCoroutine(Bounce());
         }
-        animator.SetFloat("speed", Mathf.Abs(rb.velocity.x));      
+        
     }
 
-
+    IEnumerator Bounce()
+    {
+        rb.AddRelativeForce(new Vector2(2,3));
+        yield return new WaitForSeconds(1);
+        hit = false;
+    }
 }

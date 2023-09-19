@@ -97,6 +97,7 @@ public class PlayerAttack : MonoBehaviour
                 {
                     attackPoint.localPosition = new Vector3(0.706f, 0.073f, 0);
                     weapon.Attack(this);
+                    
                 }
 
                 if (Input.GetMouseButtonDown(1))
@@ -252,4 +253,5 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+    
 }

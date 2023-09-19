@@ -132,6 +132,7 @@ public class PlayerMovementHandler : MonoBehaviour
             canDoubleJump = false;
             rb.velocity = Vector2.zero;
             rb.gravityScale = 0f;
+            
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -140,12 +141,13 @@ public class PlayerMovementHandler : MonoBehaviour
                 animator.SetBool("isClimbing", true);
                 
                 StartCoroutine(Climbing(new Vector2(transform.position.x + (1.2f * transform.localScale.x), transform.position.y + 1.6f), (.3f)));    
-            }    
-            if (Input.GetKeyDown(KeyCode.S))
+            }
+            else if (Input.GetKeyDown(KeyCode.S))
             {  
                 releaseGrab = true;
                 ReleaseGrab();
             }
+            
         }
     }
     private IEnumerator Climbing(Vector2 position, float duration)
@@ -273,6 +275,7 @@ public class PlayerMovementHandler : MonoBehaviour
         
         playerAttack.canAttack = true;
     }
+
 
     private void Jump()
     {
