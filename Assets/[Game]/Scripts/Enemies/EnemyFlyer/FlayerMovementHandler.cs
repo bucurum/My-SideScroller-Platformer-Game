@@ -18,6 +18,8 @@ public class FlayerMovementHandler : MonoBehaviour
 
     private Transform player;
     public Animator anim;
+    
+    private bool attacked;
 
     void Start()
     {
@@ -32,14 +34,15 @@ public class FlayerMovementHandler : MonoBehaviour
             {
                 {
                     isChasing = true;
-
                     anim.SetBool("attack", isChasing);
                 }
             }
             if (Vector3.Distance(transform.position, player.position) < 4.5f)
             {
+                attacked = true;
                 isChasing = false;
                 rb.AddForce(new Vector2(5,5));
+                
             }
             
 
@@ -63,7 +66,7 @@ public class FlayerMovementHandler : MonoBehaviour
                 transform.position += (-transform.right) * moveSpeed * Time.deltaTime;
                 
             }
-            else if (player.gameObject.activeSelf && !isChasing)
+            else if (player.gameObject.activeSelf && attacked)
             {
                 Vector3 direction = transform.position - player.position;
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;

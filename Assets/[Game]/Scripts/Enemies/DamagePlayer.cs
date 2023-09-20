@@ -18,8 +18,7 @@ public class DamagePlayer : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             Damage();
-            Debug.Log("general kenobi");
-            enemyMover.hit = true;
+            if (enemyMover != null) enemyMover.hit = true;
         }
     }
     private void Damage()
